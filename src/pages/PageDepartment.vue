@@ -30,7 +30,7 @@
 
 <script>
 import ClinicService from "../services/ClinicService";
-const clicic = new ClinicService();
+const clinic = new ClinicService();
 
 import DepartmentMap from "../components/DepartmentMap/DepartmentMap";
 import DepartmentList from "../components/DepartmentList/DepartmentList";
@@ -56,7 +56,7 @@ export default {
 			});
 		},
 		getRooms() {
-			clicic
+			clinic
 				.getRoomsForDepartment(this.id)
 				.then(rooms => (this.rooms = rooms));
 		}

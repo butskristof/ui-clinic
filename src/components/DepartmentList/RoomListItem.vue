@@ -1,8 +1,8 @@
 <template>
 	<q-card class="room-box">
 		<q-card-section class="row">
-			<div class="col-auto">
-				<StatusIndicator status="active" />
+			<div class="col-auto flex">
+				<StatusIndicator class="status-indicator" />
 			</div>
 			<div class="col">
 				<h4>Room {{ room.number }}</h4>
@@ -17,7 +17,7 @@
 			</div>
 		</q-card-section>
 
-		<q-card-section class="row">
+		<q-card-section class="row" @click="toPatient" id="patient-row">
 			<div class="col-auto">
 				<q-avatar rounded id="patient-picture" size="5rem">
 					<img
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { StatusIndicator } from "vue-status-indicator";
+import StatusIndicator from "../Shared/StatusIndicator";
 
 export default {
 	name: "RoomListItem",
@@ -78,6 +78,16 @@ export default {
 				}
 			}
 		};
+	},
+	methods: {
+		toPatient() {
+			this.$router.push({
+				name: "Patient",
+				params: {
+					id: this.patient.id
+				}
+			});
+		}
 	}
 };
 </script>
@@ -89,7 +99,10 @@ export default {
 }
 
 .status-indicator {
-	margin-right: 0.5rem;
+	align-self: center;
+	width: 1.75rem;
+	height: 1.75rem;
+	margin-right: 0.75rem;
 }
 
 h4 {
@@ -100,9 +113,12 @@ h4 {
 	align-self: flex-end;
 
 	.q-icon {
-		/*font-size: 1.25rem;*/
 		margin: 0.25rem;
 	}
+}
+
+#patient-row {
+	cursor: pointer;
 }
 
 #patient-picture {
@@ -114,8 +130,7 @@ h4 {
 }
 
 #patient-name {
-	font-size: 1.25rem;
-	line-height: 2.1rem;
+	font-size: 1.5rem;
 }
 
 .monitoring-data-item {

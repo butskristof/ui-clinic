@@ -17,6 +17,12 @@ const routes = [
 				props: true,
 				name: "Department",
 				component: () => import("pages/PageDepartment.vue")
+			},
+			{
+				path: "/patient/:id",
+				props: true,
+				name: "Patient",
+				component: () => import("pages/PagePatient.vue")
 			}
 		]
 	}
