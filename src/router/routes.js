@@ -5,11 +5,18 @@ const routes = [
 		children: [
 			{
 				path: "",
-				component: () => import("pages/Index.vue")
+				name: "Clinic",
+				component: () => import("pages/PageClinic.vue")
 			},
 			{
 				path: "/settings",
 				component: () => import("pages/PageSettings.vue")
+			},
+			{
+				path: "/department/:id",
+				props: true,
+				name: "Department",
+				component: () => import("pages/PageDepartment.vue")
 			}
 		]
 	}
