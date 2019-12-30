@@ -9,7 +9,15 @@
 				:key="dept.id"
 				@click="toDept(dept.id)"
 			>
-				{{ dept.name }}
+				<q-item-section avatar>
+					<q-avatar rounded>
+						<img src="https://cdn.quasar.dev/img/mountains.jpg">
+					</q-avatar>
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>{{dept.name}}</q-item-label>
+					<q-item-label>2 rooms</q-item-label>
+				</q-item-section>
 			</q-item>
 		</q-list>
 	</q-page>
@@ -51,4 +59,5 @@ export default {
 	font-size: 2rem;
 }
 /*TODO scroll area?*/
+/*	TODO ellipsis on dept name*/
 </style>

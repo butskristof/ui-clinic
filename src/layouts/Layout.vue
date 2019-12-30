@@ -18,7 +18,7 @@
 
 		<q-drawer v-model="drawerOpen" side="left" overlay behavior="mobile">
 			<q-scroll-area
-				style="height: calc(100% - 192px); margin-top: 192px; border-right: 1px solid #ddd"
+				style="height: calc(100% - 192px); margin-top: 192px"
 			>
 				<q-list>
 					<q-item
@@ -27,6 +27,7 @@
 						:to="nav.to"
 						clickable
 						exact
+						active-class="active-drawer-link"
 					>
 						<q-item-section avatar>
 							<q-icon :name="nav.icon" />
@@ -38,12 +39,8 @@
 				</q-list>
 			</q-scroll-area>
 
-			<q-img
-				class="absolute-top"
-				src="statics/mountains.jpg"
-				style="height: 192px"
-			>
-				<div class="absolute-bottom bg-transparent">
+			<div class="absolute-top" id="account-bg">
+				<div class="absolute-bottom bg-transparent q-ml-md q-mb-md" id="account-text">
 					<q-avatar size="56px" class="q-mb-sm">
 						<img
 							src="https://randomuser.me/api/portraits/lego/0.jpg"
@@ -52,7 +49,7 @@
 					<div class="text-weight-bold">Kristof Buts</div>
 					<div>@butskristof</div>
 				</div>
-			</q-img>
+			</div>
 		</q-drawer>
 
 		<q-page-container>
@@ -86,3 +83,19 @@ export default {
 	// TODO active state in drawer
 };
 </script>
+
+<style lang="scss">
+.active-drawer-link {
+	background-color: rgba(0, 0, 0, 0.25);
+}
+
+#account-bg {
+	background-color: $primary;
+	background-image: linear-gradient(19deg, $primary 0%, $secondary 60%);
+	height: 192px;
+}
+
+#account-text {
+	color: white;
+}
+</style>
