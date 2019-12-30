@@ -21,7 +21,6 @@
 				style="height: calc(100% - 192px); margin-top: 192px; border-right: 1px solid #ddd"
 			>
 				<q-list>
-<!--					<q-item-label header>Navigation</q-item-label>-->
 					<q-item
 						v-for="nav in navigation"
 						:key="nav.label"
@@ -78,7 +77,7 @@ export default {
 				{
 					label: "Settings",
 					icon: "settings",
-					to: "/"
+					to: "/settings"
 				}
 			]
 		};
