@@ -14,23 +14,31 @@
 			</div>
 		</q-card-section>
 
-		<q-card-section>
-			<q-avatar id="patient-picture">
-				<img
-					src="https://lorempixel.com/200/200/people"
-					alt="Patient picture"
-				/>
-			</q-avatar>
-			<span id="patient-name">{{ room.patient.name }}</span>
+		<q-card-section class="row">
+			<div class="col-auto">
+				<q-avatar id="patient-picture" size="5rem">
+					<img
+						src="https://lorempixel.com/200/200/people"
+						alt="Patient picture"
+					/>
+				</q-avatar>
+			</div>
+			<div class="col" id="patient-info">
+				<span id="patient-name">
+					{{ room.patient.name }}
+				</span>
+				<div class="monitoring-data">
+					<div class="monitoring-data-item">
+						<q-icon name="fas fa-heartbeat" size="sm" /> 75
+					</div>
+					<div class="monitoring-data-item">
+						<q-icon name="fas fa-stopwatch" size="sm" /> 75
+					</div>
+				</div>
+			</div>
 		</q-card-section>
 
 		<q-card-section id="monitoring-data">
-			<div class="monitoring-data-item">
-				<q-icon name="fas fa-heartbeat" size="sm" /> 75
-			</div>
-			<div class="monitoring-data-item">
-				<q-icon name="fas fa-stopwatch" size="sm" /> 75
-			</div>
 		</q-card-section>
 
 		<q-card-section>
@@ -87,8 +95,13 @@ h4 {
 	margin-right: 1rem;
 }
 
+#patient-info {
+	align-self: center;
+}
+
 #patient-name {
 	font-size: 1.25rem;
+	line-height: 2.1rem;
 }
 
 .monitoring-data-item {
