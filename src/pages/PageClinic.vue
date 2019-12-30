@@ -11,11 +11,14 @@
 			>
 				<q-item-section avatar>
 					<q-avatar rounded>
-						<img src="https://cdn.quasar.dev/img/mountains.jpg">
+						<img
+							src="https://cdn.quasar.dev/img/mountains.jpg"
+							alt="Mountains"
+						/>
 					</q-avatar>
 				</q-item-section>
 				<q-item-section>
-					<q-item-label>{{dept.name}}</q-item-label>
+					<q-item-label>{{ dept.name }}</q-item-label>
 					<q-item-label>2 rooms</q-item-label>
 				</q-item-section>
 			</q-item>

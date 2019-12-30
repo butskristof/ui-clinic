@@ -15,4 +15,16 @@ export default class ClinicService {
 			return [];
 		}
 	}
+
+	async getRoomsForDepartment(deptId) {
+		try {
+			const result = await axios.get(
+				`${BASE_URL}/rooms?departmentId=${deptId}`
+			);
+			return await result.data;
+		} catch (err) {
+			console.error(err);
+			return [];
+		}
+	}
 }

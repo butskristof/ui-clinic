@@ -40,7 +40,10 @@
 			</q-scroll-area>
 
 			<div class="absolute-top" id="account-bg">
-				<div class="absolute-bottom bg-transparent q-ml-md q-mb-md" id="account-text">
+				<div
+					class="absolute-bottom bg-transparent q-ml-md q-mb-md"
+					id="account-text"
+				>
 					<q-avatar size="56px" class="q-mb-sm">
 						<img
 							src="https://randomuser.me/api/portraits/lego/0.jpg"

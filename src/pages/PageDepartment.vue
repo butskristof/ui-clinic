@@ -20,12 +20,22 @@
 				]"
 			/>
 		</q-toolbar>
+
+		<DepartmentMap v-if="view === 'map'" :rooms="this.rooms" />
+		<DepartmentList v-if="view === 'list'" :rooms="this.rooms" />
 	</q-page>
 </template>
 
 <script>
+import ClinicService from "../services/ClinicService";
+const clicic = new ClinicService();
+
+import DepartmentMap from "../components/DepartmentMap/DepartmentMap";
+import DepartmentList from "../components/DepartmentList/DepartmentList";
+
 export default {
 	name: "PageDepartment",
+	components: { DepartmentMap, DepartmentList },
 	props: {
 		id: {
 			required: true
@@ -33,7 +43,8 @@ export default {
 	},
 	data() {
 		return {
-			view: "map" // TODO replace with setting
+			view: "list", // TODO replace with setting
+			rooms: []
 		};
 	},
 	methods: {
@@ -41,7 +52,15 @@ export default {
 			this.$router.push({
 				name: "Clinic"
 			});
+		},
+		getRooms() {
+			clicic
+				.getRoomsForDepartment(this.id)
+				.then(rooms => (this.rooms = rooms));
 		}
+	},
+	mounted() {
+		this.getRooms();
 	}
 };
 </script>
