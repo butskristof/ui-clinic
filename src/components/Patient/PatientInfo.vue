@@ -1,9 +1,9 @@
 <template>
 	<q-form class="q-ma-md">
-		<q-input v-model="department" label="Department" readonly />
-		<q-input v-model="room" label="Room number" readonly />
+		<q-input v-model="departmentName" label="Department" readonly />
+		<q-input v-model="roomNumber" label="Room number" readonly />
 		<q-input
-			v-model="patient.dateOfAdmission"
+			:value="patient.dateOfAdmission | moment('DD/MM/YYYY')"
 			label="Date of admission"
 			readonly
 		/>
@@ -29,13 +29,15 @@ export default {
 	computed: {
 		physicianName() {
 			return this.patient.physician ? this.patient.physician.name : "";
+		},
+		departmentName() {
+			return this.patient.room.departmentName
+				? this.patient.room.departmentName
+				: "";
+		},
+		roomNumber() {
+			return this.patient.room ? this.patient.room.number : "";
 		}
-	},
-	data() {
-		return {
-			department: "Test",
-			room: "4.10"
-		};
 	}
 };
 </script>

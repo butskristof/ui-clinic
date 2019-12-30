@@ -32,28 +32,30 @@
 				</span>
 				<div class="monitoring-data">
 					<div class="monitoring-data-item">
-						<q-icon name="fas fa-heartbeat" size="sm" /> 75
+						<q-icon name="fas fa-heartbeat" size="sm" />
+						{{ patient.metrics.heartRate }}
 					</div>
 					<div class="monitoring-data-item">
-						<q-icon name="fas fa-stopwatch" size="sm" /> 75
+						<q-icon name="fas fa-stopwatch" size="sm" />
+						{{ patient.metrics.bloodPressure }}
 					</div>
 				</div>
 			</div>
 		</q-card-section>
 
-		<q-card-section>
-			Next action
-		</q-card-section>
+		<PatientAction v-if="patient.nextAction" :action="patient.nextAction" />
 	</q-card>
 </template>
 
 <script>
 import StatusIndicator from "../Shared/StatusIndicator";
+import PatientAction from "../Patient/PatientAction";
 
 export default {
 	name: "RoomListItem",
 	components: {
-		StatusIndicator
+		StatusIndicator,
+		PatientAction
 	},
 	props: {
 		room: {

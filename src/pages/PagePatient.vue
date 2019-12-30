@@ -53,12 +53,23 @@ export default {
 	data() {
 		return {
 			tab: "actions",
-			patient: {}
+			patient: {},
+			departmentName: ""
 		};
 	},
 	methods: {
 		getPatient() {
-			clinic.getPatient(this.id).then(pat => (this.patient = pat));
+			clinic
+				.getPatient(this.id)
+				.then(pat => (this.patient = pat))
+				.then(() =>
+					this.getDepartmentName(this.patient.room.departmentId)
+				);
+		},
+		getDepartmentName(id) {
+			clinic
+				.getDepartmentName(id)
+				.then(name => (this.patient.room.departmentName = name));
 		}
 	},
 	mounted() {
