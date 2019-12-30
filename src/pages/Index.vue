@@ -1,11 +1,9 @@
 <template>
-  <q-page class="flex flex-center">
-    <img alt="Quasar logo" src="~assets/quasar-logo-full.svg" />
-  </q-page>
+	<p>UI Clinic</p>
 </template>
 
 <script>
 export default {
-  name: "PageIndex"
+	name: "PageIndex"
 };
 </script>

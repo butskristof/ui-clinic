@@ -8,7 +8,7 @@
   "author": "Kristof Buts <github@kristofbuts.be>",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.vue src",
+    "lint": "eslint --ext .js,.vue --fix src",
     "dev": "quasar dev"
   },
   "dependencies": {
