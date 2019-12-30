@@ -19,9 +19,9 @@
 			<q-tab name="actions" icon="alarm" label="Actions" />
 		</q-tabs>
 
-		<PatientInfo v-if="tab === 'info'" />
+		<PatientInfo v-if="tab === 'info'" :patient="patient" />
 
-		<PatientActions v-if="tab === 'actions'" :id="patient.id" />
+		<PatientActions v-if="tab === 'actions'" :actions="patient.actions" />
 	</q-page>
 </template>
 
@@ -33,7 +33,7 @@ const clinic = new ClinicService();
 
 export default {
 	name: "PagePatient",
-	components: {PatientActions, PatientInfo },
+	components: { PatientActions, PatientInfo },
 	props: {
 		id: {
 			required: true

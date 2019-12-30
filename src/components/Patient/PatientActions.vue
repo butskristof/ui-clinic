@@ -1,34 +1,28 @@
 <template>
-	<div id="patient-actions">
-		<PatientAction
-			v-for="action in actions"
-			:key="action.id"
-			:action="action"
-		/>
+	<div>
+		<div id="patient-actions">
+			<PatientAction
+				v-for="action in actions"
+				:key="action.id"
+				:action="action"
+			/>
+		</div>
+		<q-page-sticky position="bottom-right" :offset="[18, 18]">
+			<q-btn round color="secondary" icon="add" />
+		</q-page-sticky>
 	</div>
 </template>
 
 <script>
 import PatientAction from "./PatientAction";
+
 export default {
 	name: "PatientActions",
 	components: { PatientAction },
 	props: {
-		id: {
+		actions: {
 			required: true
 		}
-	},
-	data() {
-		return {
-			actions: [
-				{
-					type: 0,
-					description: "Russian blue have a lot of grump in yourself because you can't forget to be grumpy and not be like king grumpy cat lie on your belly and purr when you are asleep meow.",
-					timestamp: new Date(),
-					done: false
-				}
-			]
-		};
 	}
 };
 </script>

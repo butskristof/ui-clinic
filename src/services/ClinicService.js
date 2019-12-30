@@ -30,7 +30,9 @@ export default class ClinicService {
 
 	async getPatient(id) {
 		try {
-			const result = await axios.get(`${BASE_URL}/patients/${id}`);
+			const result = await axios.get(
+				`${BASE_URL}/patients/${id}?_embed=actions&_expand=physician`
+			);
 			return await result.data;
 		} catch (err) {
 			console.error(err);

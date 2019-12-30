@@ -1,8 +1,16 @@
 <template>
 	<q-card id="patient-action" class="q-ma-md">
-		<q-card-section>
-			<div class="text-h6">{{ actionName }}</div>
-			<div class="text-subtitle2">{{ action.timestamp }}</div>
+		<q-card-section class="row">
+			<div class="col">
+				<div class="text-h6">{{ actionName }}</div>
+				<div class="text-subtitle2">
+					{{ action.timestamp | moment("DD/MM/YYYY") }}
+				</div>
+			</div>
+			<div class="col-auto action-status-icon">
+				<q-icon v-if="action.done" name="check_circle_outline" />
+				<q-icon v-else name="hourglass_empty" />
+			</div>
 		</q-card-section>
 
 		<q-card-section>
@@ -14,7 +22,7 @@
 		<q-card-actions align="right">
 			<q-btn flat color="primary" label="Mark complete" />
 			<q-btn flat color="primary" icon="edit" />
-			<q-btn flat dense color="primary" icon="delete" />
+			<q-btn flat color="primary" icon="delete" />
 		</q-card-actions>
 	</q-card>
 </template>
@@ -43,4 +51,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.action-status-icon {
+	font-size: 2rem;
+}
+</style>
