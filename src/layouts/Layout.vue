@@ -70,7 +70,7 @@ export default {
 			drawerOpen: false,
 			navigation: [
 				{
-					label: "App",
+					label: "Departments",
 					icon: "list",
 					to: "/"
 				},
@@ -82,5 +82,7 @@ export default {
 			]
 		};
 	}
+
+	// TODO active state in drawer
 };
 </script>

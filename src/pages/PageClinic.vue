@@ -9,31 +9,21 @@
 				:key="dept.id"
 				@click="toDept(dept.id)"
 			>
-				<q-item-section>{{ dept.name }}</q-item-section>
+				{{ dept.name }}
 			</q-item>
 		</q-list>
 	</q-page>
 </template>
 
 <script>
+import ClinicService from "../services/ClinicService";
+const clicic = new ClinicService();
+
 export default {
 	name: "PageClinic",
 	data() {
 		return {
-			departments: [
-				{
-					id: 0,
-					name: "dept1"
-				},
-				{
-					id: 1,
-					name: "dept2"
-				},
-				{
-					id: 2,
-					name: "dept3"
-				}
-			]
+			departments: []
 		};
 	},
 	methods: {
@@ -44,7 +34,13 @@ export default {
 					id
 				}
 			});
+		},
+		getDepartments() {
+			clicic.getDepartments().then(depts => (this.departments = depts));
 		}
+	},
+	mounted() {
+		this.getDepartments();
 	}
 };
 </script>
