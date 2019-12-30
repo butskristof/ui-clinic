@@ -4,7 +4,7 @@
 			<div class="col">
 				<div class="text-h6">{{ actionName }}</div>
 				<div class="text-subtitle2">
-					{{ action.timestamp | moment("DD/MM/YYYY") }}
+					{{ action.timestamp | moment("DD/MM/YYYY HH:mm") }}
 				</div>
 			</div>
 			<div class="col-auto action-status-icon">
@@ -19,10 +19,12 @@
 
 		<q-separator />
 
-		<q-card-actions align="right">
+		<q-card-actions align="between">
 			<q-btn flat color="primary" label="Mark complete" />
-			<q-btn flat color="primary" icon="edit" />
-			<q-btn flat color="primary" icon="delete" />
+			<div v-if="allowed">
+				<q-btn flat color="primary" icon="edit" />
+				<q-btn flat color="primary" icon="delete" />
+			</div>
 		</q-card-actions>
 	</q-card>
 </template>

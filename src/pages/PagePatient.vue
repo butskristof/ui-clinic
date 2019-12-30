@@ -1,5 +1,16 @@
 <template>
 	<q-page>
+		<q-toolbar class="bg-grey-3">
+			<q-icon
+				color="primary"
+				name="arrow_back"
+				size="sm"
+				class="q-mr-sm"
+				@click="$router.go(-1)"
+			/>
+			Back
+		</q-toolbar>
+
 		<div class="row q-ma-md">
 			<div class="col-auto">
 				<q-avatar rounded id="patient-picture" size="8rem">
