@@ -21,6 +21,8 @@
 			/>
 		</q-toolbar>
 
+		Department name
+
 		<DepartmentMap v-if="view === 'map'" :rooms="this.rooms" />
 		<DepartmentList v-if="view === 'list'" :rooms="this.rooms" />
 	</q-page>

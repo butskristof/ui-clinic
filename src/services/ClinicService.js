@@ -19,8 +19,18 @@ export default class ClinicService {
 	async getRoomsForDepartment(deptId) {
 		try {
 			const result = await axios.get(
-				`${BASE_URL}/rooms?departmentId=${deptId}`
+				`${BASE_URL}/rooms?departmentId=${deptId}&_embed=patients`
 			);
+			return await result.data;
+		} catch (err) {
+			console.error(err);
+			return [];
+		}
+	}
+
+	async getPatient(id) {
+		try {
+			const result = await axios.get(`${BASE_URL}/patients/${id}`);
 			return await result.data;
 		} catch (err) {
 			console.error(err);

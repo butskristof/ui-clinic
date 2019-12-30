@@ -1,6 +1,9 @@
 <template>
 	<q-card class="room-box">
 		<q-card-section class="row">
+			<div class="col-auto">
+				<StatusIndicator status="active" />
+			</div>
 			<div class="col">
 				<h4>Room {{ room.number }}</h4>
 			</div>
@@ -16,7 +19,7 @@
 
 		<q-card-section class="row">
 			<div class="col-auto">
-				<q-avatar id="patient-picture" size="5rem">
+				<q-avatar rounded id="patient-picture" size="5rem">
 					<img
 						src="https://lorempixel.com/200/200/people"
 						alt="Patient picture"
@@ -25,7 +28,7 @@
 			</div>
 			<div class="col" id="patient-info">
 				<span id="patient-name">
-					{{ room.patient.name }}
+					{{ patient.name }}
 				</span>
 				<div class="monitoring-data">
 					<div class="monitoring-data-item">
@@ -38,9 +41,6 @@
 			</div>
 		</q-card-section>
 
-		<q-card-section id="monitoring-data">
-		</q-card-section>
-
 		<q-card-section>
 			Next action
 		</q-card-section>
@@ -48,12 +48,22 @@
 </template>
 
 <script>
+import { StatusIndicator } from "vue-status-indicator";
+
 export default {
 	name: "RoomListItem",
+	components: {
+		StatusIndicator
+	},
 	props: {
 		room: {
 			type: Object,
 			required: true
+		}
+	},
+	computed: {
+		patient() {
+			return this.room.patients[0];
 		}
 	},
 	data() {
@@ -76,6 +86,10 @@ export default {
 .room-box {
 	min-width: 150px;
 	margin: 1rem;
+}
+
+.status-indicator {
+	margin-right: 0.5rem;
 }
 
 h4 {
