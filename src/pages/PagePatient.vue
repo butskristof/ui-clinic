@@ -21,18 +21,19 @@
 
 		<PatientInfo v-if="tab === 'info'" />
 
-		<div v-if="tab === 'actions'"></div>
+		<PatientActions v-if="tab === 'actions'" :id="patient.id" />
 	</q-page>
 </template>
 
 <script>
 import ClinicService from "../services/ClinicService";
-import PatientInfo from "../components/PatientInfo/PatientInfo";
+import PatientInfo from "../components/Patient/PatientInfo";
+import PatientActions from "../components/Patient/PatientActions";
 const clinic = new ClinicService();
 
 export default {
 	name: "PagePatient",
-	components: { PatientInfo },
+	components: {PatientActions, PatientInfo },
 	props: {
 		id: {
 			required: true
@@ -40,7 +41,7 @@ export default {
 	},
 	data() {
 		return {
-			tab: "info",
+			tab: "actions",
 			patient: {}
 		};
 	},
