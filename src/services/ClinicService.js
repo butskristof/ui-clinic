@@ -77,6 +77,17 @@ export default class ClinicService {
 		}
 	}
 
+	async setActionDetails(actionId, timestamp, description) {
+		try {
+			await axios.patch(`${BASE_URL}/actions/${actionId}`, {
+				timestamp,
+				description
+			});
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
 	async updatePatientInfo(patientId, diet, remarks) {
 		try {
 			await axios.patch(`${BASE_URL}/patients/${patientId}`, {

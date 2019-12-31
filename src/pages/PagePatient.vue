@@ -40,6 +40,7 @@
 			v-if="tab === 'actions'"
 			:actions="patient.actions"
 			@updateActionStatus="updateActionStatus"
+			@updateActionDetails="updateActionDetails"
 		/>
 	</q-page>
 </template>
@@ -47,7 +48,7 @@
 <script>
 import ClinicService from "../services/ClinicService";
 import PatientInfo from "../components/Patient/PatientInfo";
-import PatientActions from "../components/Patient/PatientActions";
+import PatientActions from "../components/Patient/Actions/PatientActions";
 const clinic = new ClinicService();
 
 export default {
@@ -82,6 +83,11 @@ export default {
 		},
 		updateActionStatus(id, value) {
 			clinic.setActionStatus(id, value).then(() => this.getPatient());
+		},
+		updateActionDetails(id, timestamp, description) {
+			clinic
+				.setActionDetails(id, timestamp, description)
+				.then(() => this.getPatient());
 		},
 		updatePatientInfo() {
 			clinic

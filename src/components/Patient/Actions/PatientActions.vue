@@ -16,6 +16,7 @@
 				:key="action.id"
 				:action="action"
 				@updateActionStatus="updateActionStatus"
+				@updateActionDetails="updateActionDetails"
 			/>
 		</div>
 
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-import PatientAction from "../Shared/PatientAction";
+import PatientAction from "../../Shared/PatientAction";
 
 export default {
 	name: "PatientActions",
@@ -53,6 +54,9 @@ export default {
 	methods: {
 		updateActionStatus(id, value) {
 			this.$emit("updateActionStatus", id, value);
+		},
+		updateActionDetails(id, timestamp, description) {
+			this.$emit("updateActionDetails", id, timestamp, description);
 		}
 	}
 };

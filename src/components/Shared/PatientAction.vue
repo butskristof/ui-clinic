@@ -27,7 +27,7 @@
 				@click="$emit('updateActionStatus', action.id, !action.done)"
 			/>
 			<div v-if="allowed">
-				<q-btn flat color="primary" icon="edit" />
+				<q-btn flat color="primary" icon="edit" @click="showDialog" />
 				<q-btn flat color="primary" icon="delete" />
 			</div>
 		</q-card-actions>
@@ -39,6 +39,7 @@ import {
 	actionTypeToName,
 	checkActionAccess
 } from "../../functions/actionTypeFunctions";
+import EditActionDialog from "../Patient/Actions/EditActionDialog";
 
 export default {
 	name: "PatientAction",
@@ -46,6 +47,11 @@ export default {
 		action: {
 			required: true
 		}
+	},
+	data() {
+		return {
+			showEditDialog: false
+		};
 	},
 	computed: {
 		completedText() {
@@ -56,6 +62,24 @@ export default {
 		},
 		actionName() {
 			return actionTypeToName(this.action.type);
+		}
+	},
+	methods: {
+		showDialog() {
+			this.$q
+				.dialog({
+					component: EditActionDialog,
+					parent: this, // becomes child of this Vue node
+					action: { ...this.action }
+				})
+				.onOk((date, description) => {
+					this.$emit(
+						"updateActionDetails",
+						this.action.id,
+						date,
+						description
+					);
+				});
 		}
 	}
 };
