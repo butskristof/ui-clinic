@@ -1,5 +1,5 @@
 <template>
-	<q-page>
+	<q-page class="room-list">
 		<RoomListItem v-for="room in this.rooms" :key="room.id" :room="room" />
 	</q-page>
 </template>
@@ -19,4 +19,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.room-list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: stretch;
+	align-content: flex-start;
+}
+</style>

@@ -69,9 +69,12 @@ export default class ClinicService {
 			);
 			const actions = await result.data;
 			const now = new Date();
-			return actions
-				.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
-				.filter(a => new Date(a.timestamp) > now)[0];
+			actions.sort(
+				(a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+			);
+			return actions.filter(
+				a => a.done === false || new Date(a.timestamp) > now
+			)[0];
 		} catch (err) {
 			console.error(err);
 			return [];

@@ -19,7 +19,8 @@ const state = {
 				upper: 100
 			}
 		},
-		enableAlarm: true
+		enableAlarm: true,
+		alarmTime: 120
 	}
 };
 

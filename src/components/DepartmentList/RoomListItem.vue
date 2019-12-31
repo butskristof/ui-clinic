@@ -2,7 +2,11 @@
 	<q-card class="room-box">
 		<q-card-section class="row">
 			<div class="col-auto flex">
-				<StatusIndicator class="status-indicator" />
+				<StatusIndicator
+					class="status-indicator"
+					:room="room"
+					:nextAction="nextAction"
+				/>
 			</div>
 			<div class="col">
 				<h4>Room {{ room.number }}</h4>
@@ -18,16 +22,14 @@
 		</q-card-section>
 
 		<q-card-section
-			class="row q-pb-none"
+			class="row"
 			@click="toPatient"
 			id="patient-row"
+			v-if="patient"
 		>
 			<div class="col-auto">
 				<q-avatar rounded id="patient-picture" size="5rem">
-					<img
-						src="https://lorempixel.com/200/200/people"
-						alt="Patient picture"
-					/>
+					<img :src="imgLink" alt="Patient picture" />
 				</q-avatar>
 			</div>
 			<div class="col" id="patient-info">
@@ -48,7 +50,7 @@
 		</q-card-section>
 
 		<PatientAction
-			v-if="nextAction"
+			v-if="patient && nextAction"
 			:action="nextAction"
 			@updateActionStatus="updateActionStatus"
 			@updateActionDetails="updateActionDetails"
@@ -58,6 +60,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import StatusIndicator from "../Shared/StatusIndicator";
 import PatientAction from "../Shared/PatientAction";
 import ClinicService from "../../services/ClinicService";
@@ -76,6 +79,10 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters("settings", ["settings"]),
+		imgLink() {
+			return `https://lorempixel.com/200/200/people?q=${Math.random()}`;
+		},
 		patient() {
 			return this.room.patients[0];
 		}
@@ -104,6 +111,7 @@ export default {
 			});
 		},
 		getNextActionForPatient() {
+			if (!this.patient) return;
 			clinic
 				.getNextActionForPatient(this.room.patients[0].id)
 				.then(action => (this.nextAction = action));
@@ -130,8 +138,12 @@ export default {
 
 <style scoped lang="scss">
 .room-box {
-	min-width: 150px;
+	/*min-width: 150px;*/
+	max-width: 25rem;
+	width: 100%;
 	margin: 1rem;
+	/*height: 10rem;*/
+	/*overflow: auto;*/
 }
 
 .status-indicator {
