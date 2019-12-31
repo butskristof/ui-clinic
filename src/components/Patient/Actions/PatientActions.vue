@@ -17,6 +17,7 @@
 				:action="action"
 				@updateActionStatus="updateActionStatus"
 				@updateActionDetails="updateActionDetails"
+				@deleteAction="deleteAction"
 			/>
 		</div>
 
@@ -57,6 +58,9 @@ export default {
 		},
 		updateActionDetails(id, timestamp, description) {
 			this.$emit("updateActionDetails", id, timestamp, description);
+		},
+		deleteAction(id) {
+			this.$emit("deleteAction", id);
 		}
 	}
 };

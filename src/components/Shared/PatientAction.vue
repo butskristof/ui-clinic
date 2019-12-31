@@ -28,7 +28,7 @@
 			/>
 			<div v-if="allowed">
 				<q-btn flat color="primary" icon="edit" @click="showDialog" />
-				<q-btn flat color="primary" icon="delete" />
+				<q-btn flat color="primary" icon="delete" @click="$emit('deleteAction', action.id)" />
 			</div>
 		</q-card-actions>
 	</q-card>

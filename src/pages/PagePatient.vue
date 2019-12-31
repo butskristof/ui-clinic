@@ -41,6 +41,7 @@
 			:actions="patient.actions"
 			@updateActionStatus="updateActionStatus"
 			@updateActionDetails="updateActionDetails"
+			@deleteAction="deleteAction"
 		/>
 	</q-page>
 </template>
@@ -88,6 +89,9 @@ export default {
 			clinic
 				.setActionDetails(id, timestamp, description)
 				.then(() => this.getPatient());
+		},
+		deleteAction(id) {
+			console.log("delete action ", id);
 		},
 		updatePatientInfo() {
 			clinic
