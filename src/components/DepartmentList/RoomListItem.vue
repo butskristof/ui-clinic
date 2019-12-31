@@ -6,6 +6,8 @@
 					class="status-indicator"
 					:room="room"
 					:nextAction="nextAction"
+					@startAlarm="$emit('startAlarm')"
+					@stopAlarm="$emit('stopAlarm')"
 				/>
 			</div>
 			<div class="col">

@@ -46,7 +46,9 @@ export default {
 	data() {
 		return {
 			view: "list", // TODO replace with setting
-			rooms: []
+			rooms: [],
+			updateInterval: null,
+			playAlarm: false
 		};
 	},
 	methods: {
@@ -63,6 +65,7 @@ export default {
 	},
 	mounted() {
 		this.getRooms();
+		this.updateInterval = setInterval(this.getRooms, 10000);
 	}
 };
 </script>

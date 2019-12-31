@@ -1,5 +1,5 @@
 <template>
-	<span :class="statusClass" />
+	<span :class="statusClass" @click="clickIndicator" />
 </template>
 
 <script>
@@ -24,6 +24,8 @@ export default {
 			return this.room.patients[0];
 		},
 		checkMonitoringData() {
+			if (!this.patient) return false;
+
 			const heartRate = this.patient.metrics.heartRate;
 			if (
 				heartRate < this.settings.tresholds.heartRate.lower ||
@@ -48,7 +50,8 @@ export default {
 			} else if (this.patient.calledForHelp) {
 				return "status5";
 			} else if (this.checkMonitoringData) {
-				return "status6";
+				this.$emit("startAlarm");
+				return "status6 pulsate";
 			} else if (!this.nextAction) {
 				return "status2";
 			} else if (
@@ -63,6 +66,13 @@ export default {
 				return "status3";
 			} else {
 				return "";
+			}
+		}
+	},
+	methods: {
+		clickIndicator() {
+			if (this.checkMonitoringData) {
+				this.$emit("stopAlarm");
 			}
 		}
 	}
@@ -98,6 +108,23 @@ span {
 }
 
 .status6 {
-	background-color: rebeccapurple;
+	background-color: red;
+}
+
+.pulsate {
+	-webkit-animation: pulsate 0.5s ease-out;
+	-webkit-animation-iteration-count: infinite;
+	opacity: 0.5;
+}
+@-webkit-keyframes pulsate {
+	0% {
+		opacity: 0.5;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.5;
+	}
 }
 </style>
