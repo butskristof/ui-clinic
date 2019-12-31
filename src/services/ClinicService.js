@@ -76,4 +76,15 @@ export default class ClinicService {
 			console.error(err);
 		}
 	}
+
+	async updatePatientInfo(patientId, diet, remarks) {
+		try {
+			await axios.patch(`${BASE_URL}/patients/${patientId}`, {
+				diet,
+				remarks
+			});
+		} catch (err) {
+			console.error(err);
+		}
+	}
 }

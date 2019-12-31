@@ -30,7 +30,11 @@
 			<q-tab name="info" icon="info" label="Info" />
 		</q-tabs>
 
-		<PatientInfo v-if="tab === 'info'" :patient="patient" />
+		<PatientInfo
+			v-if="tab === 'info'"
+			:patient="patient"
+			@updatePatientInfo="updatePatientInfo"
+		/>
 
 		<PatientActions
 			v-if="tab === 'actions'"
@@ -66,17 +70,27 @@ export default {
 			clinic
 				.getPatient(this.id)
 				.then(pat => (this.patient = pat))
-				.then(() =>
-					this.getDepartmentName(this.patient.room.departmentId)
-				);
+				.then(() => {
+					this.getDepartmentName(this.patient.room.departmentId);
+				});
 		},
 		getDepartmentName(id) {
-			clinic
-				.getDepartmentName(id)
-				.then(name => (this.patient.room.departmentName = name));
+			clinic.getDepartmentName(id).then(name => {
+				this.$set(this.patient.room, "departmentName", name);
+				// $set trigger a Vue update, just assigning with this.patient.room.departmentName does not
+			});
 		},
 		updateActionStatus(id, value) {
 			clinic.setActionStatus(id, value).then(() => this.getPatient());
+		},
+		updatePatientInfo() {
+			clinic
+				.updatePatientInfo(
+					this.patient.id,
+					this.patient.diet,
+					this.patient.remarks
+				)
+				.then(() => this.getPatient());
 		}
 	},
 	mounted() {
