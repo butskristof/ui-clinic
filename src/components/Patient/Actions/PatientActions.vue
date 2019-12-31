@@ -9,7 +9,7 @@
 			/>
 		</q-toolbar>
 
-		<div id="patient-actions">
+		<div id="patient-actions" class="q-mb-xl">
 			<PatientAction
 				class="q-ma-md"
 				v-for="action in filteredActions"
@@ -41,6 +41,11 @@ export default {
 	computed: {
 		filteredActions() {
 			let actions = this.actions;
+			if (actions) {
+				actions.sort(
+					(a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+				);
+			}
 			if (!this.showCompleted) {
 				actions = actions.filter(a => !a.done);
 			}
@@ -56,8 +61,8 @@ export default {
 		updateActionStatus(id, value) {
 			this.$emit("updateActionStatus", id, value);
 		},
-		updateActionDetails(id, timestamp, description) {
-			this.$emit("updateActionDetails", id, timestamp, description);
+		updateActionDetails(id, payload) {
+			this.$emit("updateActionDetails", id, payload);
 		},
 		deleteAction(id) {
 			this.$emit("deleteAction", id);

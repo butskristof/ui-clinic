@@ -28,7 +28,12 @@
 			/>
 			<div v-if="allowed">
 				<q-btn flat color="primary" icon="edit" @click="showDialog" />
-				<q-btn flat color="primary" icon="delete" @click="$emit('deleteAction', action.id)" />
+				<q-btn
+					flat
+					color="primary"
+					icon="delete"
+					@click="deleteAction"
+				/>
 			</div>
 		</q-card-actions>
 	</q-card>
@@ -72,13 +77,21 @@ export default {
 					parent: this, // becomes child of this Vue node
 					action: { ...this.action }
 				})
-				.onOk((date, description) => {
-					this.$emit(
-						"updateActionDetails",
-						this.action.id,
-						date,
-						description
-					);
+				.onOk(payload => {
+					this.$emit("updateActionDetails", this.action.id, payload);
+				});
+		},
+		deleteAction() {
+			this.$q
+				.dialog({
+					title: "Confirm delete",
+					message: "Are you sure you want to delete this action?",
+					cancel: true,
+					persistent: true,
+					ok: "Delete"
+				})
+				.onOk(() => {
+					this.$emit("deleteAction", this.action.id);
 				});
 		}
 	}

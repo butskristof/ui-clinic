@@ -114,7 +114,10 @@ export default {
 			// emit "ok" event (with optional payload)
 			// before hiding the QDialog
 			const date = this.$moment(this.date, this.DATETIME_FORMAT).format();
-			this.$emit("ok", date, this.action.description);
+			this.$emit("ok", {
+				timestamp: date,
+				description: this.action.description
+			});
 			// or with payload: this.$emit('ok', { ... })
 
 			// then hiding dialog

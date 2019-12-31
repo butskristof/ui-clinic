@@ -85,13 +85,13 @@ export default {
 		updateActionStatus(id, value) {
 			clinic.setActionStatus(id, value).then(() => this.getPatient());
 		},
-		updateActionDetails(id, timestamp, description) {
+		updateActionDetails(id, payload) {
 			clinic
-				.setActionDetails(id, timestamp, description)
+				.setActionDetails(id, payload.timestamp, payload.description)
 				.then(() => this.getPatient());
 		},
 		deleteAction(id) {
-			console.log("delete action ", id);
+			clinic.deleteAction(id).then(() => this.getPatient());
 		},
 		updatePatientInfo() {
 			clinic

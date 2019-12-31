@@ -51,6 +51,17 @@ export default class ClinicService {
 		}
 	}
 
+	async updatePatientInfo(patientId, diet, remarks) {
+		try {
+			await axios.patch(`${BASE_URL}/patients/${patientId}`, {
+				diet,
+				remarks
+			});
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
 	async getNextActionForPatient(patientId) {
 		try {
 			const result = await axios.get(
@@ -79,6 +90,7 @@ export default class ClinicService {
 
 	async setActionDetails(actionId, timestamp, description) {
 		try {
+			console.log(description);
 			await axios.patch(`${BASE_URL}/actions/${actionId}`, {
 				timestamp,
 				description
@@ -88,12 +100,10 @@ export default class ClinicService {
 		}
 	}
 
-	async updatePatientInfo(patientId, diet, remarks) {
+	async deleteAction(id) {
 		try {
-			await axios.patch(`${BASE_URL}/patients/${patientId}`, {
-				diet,
-				remarks
-			});
+			// await axios.delete(`${BASE_URL}/actions/${id}`);
+			console.log(`Just pretend we've deleted action with id ${id}`);
 		} catch (err) {
 			console.error(err);
 		}
