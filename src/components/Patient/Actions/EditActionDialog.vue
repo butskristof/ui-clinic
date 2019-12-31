@@ -1,69 +1,78 @@
 <template>
 	<q-dialog ref="dialog" @hide="onDialogHide">
 		<q-card class="q-dialog-plugin">
-			<q-card-section>
-				<div class="text-h6">Edit action</div>
-			</q-card-section>
+			<q-form @submit="onOKClick">
+				<q-card-section>
+					<div class="text-h6">Edit action</div>
+				</q-card-section>
 
-			<q-card-section>
-				<q-input
-					v-model="date"
-					readonly
-					label="Date and time of action"
-				>
-					<template v-slot:append>
-						<q-icon name="event" class="cursor-pointer">
-							<q-popup-proxy
-								ref="qDateProxy"
-								transition-show="scale"
-								transition-hide="scale"
-							>
-								<q-date
-									v-model="date"
-									:mask="DATETIME_FORMAT"
-									@input="() => $refs.qDateProxy.hide()"
-								/>
-							</q-popup-proxy>
-						</q-icon>
-						<q-icon name="access_time" class="cursor-pointer">
-							<q-popup-proxy
-								ref="qTimeProxy"
-								transition-show="scale"
-								transition-hide="scale"
-							>
-								<q-time
-									v-model="date"
-									:mask="DATETIME_FORMAT"
-									format24h
-									@input="() => $refs.qTimeProxy.hide()"
-								/>
-							</q-popup-proxy>
-						</q-icon>
-					</template>
-				</q-input>
-			</q-card-section>
+				<q-card-section>
+					<q-input
+						v-model="date"
+						readonly
+						label="Date and time of action"
+						lazy-rules
+						:rules="[
+							val => !!val || '* Required',
+							val =>
+								$moment(val, DATETIME_FORMAT).isValid() ||
+								'Invalid date'
+						]"
+					>
+						<template v-slot:append>
+							<q-icon name="event" class="cursor-pointer">
+								<q-popup-proxy
+									ref="qDateProxy"
+									transition-show="scale"
+									transition-hide="scale"
+								>
+									<q-date
+										v-model="date"
+										:mask="DATETIME_FORMAT"
+										@input="() => $refs.qDateProxy.hide()"
+									/>
+								</q-popup-proxy>
+							</q-icon>
+							<q-icon name="access_time" class="cursor-pointer">
+								<q-popup-proxy
+									ref="qTimeProxy"
+									transition-show="scale"
+									transition-hide="scale"
+								>
+									<q-time
+										v-model="date"
+										:mask="DATETIME_FORMAT"
+										format24h
+										@input="() => $refs.qTimeProxy.hide()"
+									/>
+								</q-popup-proxy>
+							</q-icon>
+						</template>
+					</q-input>
+				</q-card-section>
 
-			<q-card-section>
-				<q-input
-					v-model="action.description"
-					label="Description"
-					type="textarea"
-				/>
-			</q-card-section>
+				<q-card-section>
+					<q-input
+						v-model="action.description"
+						label="Description"
+						type="textarea"
+					/>
+				</q-card-section>
 
-			<!-- buttons example -->
-			<q-card-actions align="right">
-				<q-btn
-					color="secondary"
-					label="Cancel"
-					@click="onCancelClick"
-				/>
-				<q-btn
-					color="secondary"
-					label="Save changes"
-					@click="onOKClick"
-				/>
-			</q-card-actions>
+				<!-- buttons example -->
+				<q-card-actions align="right">
+					<q-btn
+						color="secondary"
+						label="Cancel"
+						@click="onCancelClick"
+					/>
+					<q-btn
+						color="secondary"
+						label="Save changes"
+						type="submit"
+					/>
+				</q-card-actions>
+			</q-form>
 		</q-card>
 	</q-dialog>
 </template>
