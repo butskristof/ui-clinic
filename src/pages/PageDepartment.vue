@@ -58,17 +58,7 @@ export default {
 		getRooms() {
 			clinic
 				.getRoomsForDepartment(this.id)
-				.then(rooms => (this.rooms = rooms))
-				.then(() =>
-					this.rooms.forEach(r => {
-						this.getNextActionsForPatient(r.patients[0]);
-					})
-				);
-		},
-		getNextActionsForPatient(patient) {
-			clinic
-				.getNextActionForPatient(patient.id)
-				.then(action => (patient.nextAction = action));
+				.then(rooms => (this.rooms = rooms));
 		}
 	},
 	mounted() {

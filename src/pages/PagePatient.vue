@@ -26,13 +26,17 @@
 		</div>
 
 		<q-tabs v-model="tab" inline-label>
-			<q-tab name="info" icon="info" label="Info" />
 			<q-tab name="actions" icon="alarm" label="Actions" />
+			<q-tab name="info" icon="info" label="Info" />
 		</q-tabs>
 
 		<PatientInfo v-if="tab === 'info'" :patient="patient" />
 
-		<PatientActions v-if="tab === 'actions'" :actions="patient.actions" />
+		<PatientActions
+			v-if="tab === 'actions'"
+			:actions="patient.actions"
+			@updateActionStatus="updateActionStatus"
+		/>
 	</q-page>
 </template>
 
@@ -70,6 +74,9 @@ export default {
 			clinic
 				.getDepartmentName(id)
 				.then(name => (this.patient.room.departmentName = name));
+		},
+		updateActionStatus(id, value) {
+			clinic.setActionStatus(id, value).then(() => this.getPatient());
 		}
 	},
 	mounted() {

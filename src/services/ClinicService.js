@@ -42,7 +42,7 @@ export default class ClinicService {
 	async getPatient(id) {
 		try {
 			const result = await axios.get(
-				`${BASE_URL}/patients/${id}?_embed=actions&_expand=physician&_expand=room&_expand=room.department`
+				`${BASE_URL}/patients/${id}?_embed=actions&_expand=physician&_expand=room`
 			);
 			return await result.data;
 		} catch (err) {
@@ -64,6 +64,16 @@ export default class ClinicService {
 		} catch (err) {
 			console.error(err);
 			return [];
+		}
+	}
+
+	async setActionStatus(actionId, value) {
+		try {
+			await axios.patch(`${BASE_URL}/actions/${actionId}`, {
+				done: value
+			});
+		} catch (err) {
+			console.error(err);
 		}
 	}
 }

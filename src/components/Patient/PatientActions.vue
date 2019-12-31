@@ -1,12 +1,24 @@
 <template>
 	<div>
+		<q-toolbar>
+			<q-space />
+			<q-toggle
+				v-model="showCompleted"
+				label="Show completed"
+				left-label
+			/>
+		</q-toolbar>
+
 		<div id="patient-actions">
 			<PatientAction
-				v-for="action in actions"
+				class="q-ma-md"
+				v-for="action in filteredActions"
 				:key="action.id"
 				:action="action"
+				@updateActionStatus="updateActionStatus"
 			/>
 		</div>
+
 		<q-page-sticky position="bottom-right" :offset="[18, 18]">
 			<q-btn round color="secondary" icon="add" />
 		</q-page-sticky>
@@ -14,7 +26,7 @@
 </template>
 
 <script>
-import PatientAction from "./PatientAction";
+import PatientAction from "../Shared/PatientAction";
 
 export default {
 	name: "PatientActions",
@@ -23,8 +35,31 @@ export default {
 		actions: {
 			required: true
 		}
+	},
+	computed: {
+		filteredActions() {
+			let actions = this.actions;
+			if (!this.showCompleted) {
+				actions = actions.filter(a => !a.done);
+			}
+			return actions;
+		}
+	},
+	data() {
+		return {
+			showCompleted: true
+		};
+	},
+	methods: {
+		updateActionStatus(id, value) {
+			this.$emit("updateActionStatus", id, value);
+		}
 	}
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+#patient-actions {
+	margin-top: -1rem;
+}
+</style>

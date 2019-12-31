@@ -17,7 +17,11 @@
 			</div>
 		</q-card-section>
 
-		<q-card-section class="row" @click="toPatient" id="patient-row">
+		<q-card-section
+			class="row q-pb-none"
+			@click="toPatient"
+			id="patient-row"
+		>
 			<div class="col-auto">
 				<q-avatar rounded id="patient-picture" size="5rem">
 					<img
@@ -43,13 +47,19 @@
 			</div>
 		</q-card-section>
 
-		<PatientAction v-if="patient.nextAction" :action="patient.nextAction" />
+		<PatientAction
+			v-if="nextAction"
+			:action="nextAction"
+			@updateActionStatus="updateActionStatus"
+		/>
 	</q-card>
 </template>
 
 <script>
 import StatusIndicator from "../Shared/StatusIndicator";
-import PatientAction from "../Patient/PatientAction";
+import PatientAction from "../Shared/PatientAction";
+import ClinicService from "../../services/ClinicService";
+const clinic = new ClinicService();
 
 export default {
 	name: "RoomListItem",
@@ -78,7 +88,8 @@ export default {
 				"2": {
 					icon: "fas fa-tv"
 				}
-			}
+			},
+			nextAction: {}
 		};
 	},
 	methods: {
@@ -89,7 +100,20 @@ export default {
 					id: this.patient.id
 				}
 			});
+		},
+		getNextActionForPatient() {
+			clinic
+				.getNextActionForPatient(this.room.patients[0].id)
+				.then(action => (this.nextAction = action));
+		},
+		updateActionStatus(id, value) {
+			clinic
+				.setActionStatus(id, value)
+				.then(() => this.getNextActionForPatient());
 		}
+	},
+	mounted() {
+		this.getNextActionForPatient();
 	}
 };
 </script>

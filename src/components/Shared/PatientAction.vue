@@ -1,5 +1,5 @@
 <template>
-	<q-card id="patient-action" class="q-ma-md">
+	<q-card id="patient-action">
 		<q-card-section class="row">
 			<div class="col">
 				<div class="text-h6">{{ actionName }}</div>
@@ -13,14 +13,19 @@
 			</div>
 		</q-card-section>
 
-		<q-card-section>
+		<q-card-section v-if="action.description">
 			{{ action.description }}
 		</q-card-section>
 
 		<q-separator />
 
 		<q-card-actions align="between">
-			<q-btn flat color="primary" label="Mark complete" />
+			<q-btn
+				flat
+				color="primary"
+				:label="completedText"
+				@click="$emit('updateActionStatus', action.id, !action.done)"
+			/>
 			<div v-if="allowed">
 				<q-btn flat color="primary" icon="edit" />
 				<q-btn flat color="primary" icon="delete" />
@@ -43,6 +48,9 @@ export default {
 		}
 	},
 	computed: {
+		completedText() {
+			return `Mark ${this.action.done ? "incomplete" : "complete"}`;
+		},
 		allowed() {
 			return checkActionAccess(this.action.type);
 		},

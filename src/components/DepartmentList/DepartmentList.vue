@@ -1,15 +1,15 @@
 <template>
 	<q-page>
-		<Room v-for="room in this.rooms" :key="room.id" :room="room" />
+		<RoomListItem v-for="room in this.rooms" :key="room.id" :room="room" />
 	</q-page>
 </template>
 
 <script>
-import Room from "./RoomListItem";
+import RoomListItem from "./RoomListItem";
 
 export default {
 	name: "DepartmentList",
-	components: { Room },
+	components: { RoomListItem },
 	props: {
 		rooms: {
 			type: Array,
