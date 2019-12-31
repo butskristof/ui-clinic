@@ -90,7 +90,6 @@ export default class ClinicService {
 
 	async setActionDetails(actionId, timestamp, description) {
 		try {
-			console.log(description);
 			await axios.patch(`${BASE_URL}/actions/${actionId}`, {
 				timestamp,
 				description

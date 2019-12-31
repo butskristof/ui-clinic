@@ -51,6 +51,8 @@
 			v-if="nextAction"
 			:action="nextAction"
 			@updateActionStatus="updateActionStatus"
+			@updateActionDetails="updateActionDetails"
+			@deleteAction="deleteAction"
 		/>
 	</q-card>
 </template>
@@ -110,6 +112,14 @@ export default {
 			clinic
 				.setActionStatus(id, value)
 				.then(() => this.getNextActionForPatient());
+		},
+		updateActionDetails(id, payload) {
+			clinic
+				.setActionDetails(id, payload.timestamp, payload.description)
+				.then(() => this.getNextActionForPatient());
+		},
+		deleteAction(id) {
+			clinic.deleteAction(id).then(() => this.getNextActionForPatient());
 		}
 	},
 	mounted() {
