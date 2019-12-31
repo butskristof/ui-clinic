@@ -20,3 +20,20 @@ export function actionTypeToName(type) {
 export function checkActionAccess(type) {
 	return type < 10;
 }
+
+export function getAllowedTypes() {
+	return [
+		{
+			value: 0,
+			label: "Eten"
+		},
+		{
+			value: 1,
+			label: "Wassen"
+		},
+		{
+			value: 2,
+			label: "Omkeren"
+		}
+	];
+}

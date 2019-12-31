@@ -22,13 +22,14 @@
 		</div>
 
 		<q-page-sticky position="bottom-right" :offset="[18, 18]">
-			<q-btn round color="secondary" icon="add" />
+			<q-btn round color="secondary" icon="add" @click="addAction" />
 		</q-page-sticky>
 	</div>
 </template>
 
 <script>
 import PatientAction from "../../Shared/PatientAction";
+import AddActionDialog from "./AddActionDialog";
 
 export default {
 	name: "PatientActions",
@@ -66,6 +67,16 @@ export default {
 		},
 		deleteAction(id) {
 			this.$emit("deleteAction", id);
+		},
+		addAction() {
+			this.$q
+				.dialog({
+					component: AddActionDialog,
+					parent: this // becomes child of this Vue node
+				})
+				.onOk(payload => {
+					this.$emit("addAction", payload);
+				});
 		}
 	}
 };

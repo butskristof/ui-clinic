@@ -42,6 +42,7 @@
 			@updateActionStatus="updateActionStatus"
 			@updateActionDetails="updateActionDetails"
 			@deleteAction="deleteAction"
+			@addAction="addAction"
 		/>
 	</q-page>
 </template>
@@ -92,6 +93,10 @@ export default {
 		},
 		deleteAction(id) {
 			clinic.deleteAction(id).then(() => this.getPatient());
+		},
+		addAction(payload) {
+			payload.patientId = this.patient.id;
+			clinic.addAction(payload).then(() => this.getPatient());
 		},
 		updatePatientInfo() {
 			clinic

@@ -108,4 +108,12 @@ export default class ClinicService {
 			console.error(err);
 		}
 	}
+
+	async addAction(payload) {
+		try {
+			await axios.post(`${BASE_URL}/actions`, payload);
+		} catch (err) {
+			console.error(err);
+		}
+	}
 }
