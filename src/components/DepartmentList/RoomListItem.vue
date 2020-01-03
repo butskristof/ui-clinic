@@ -1,4 +1,4 @@
-<template>
+<template xmlns:div="http://www.w3.org/1999/html">
 	<q-card class="room-box">
 		<q-card-section class="row">
 			<div class="col-auto flex">
@@ -11,9 +11,15 @@
 				/>
 			</div>
 			<div class="col">
-				<h4>Room {{ room.number }}</h4>
+				<h4 v-if="settings.viewPreferences.roomNumber">
+					Room {{ room.number }}
+				</h4>
 			</div>
-			<div class="col-auto" id="facilities">
+			<div
+				v-if="settings.viewPreferences.facilities"
+				class="col-auto"
+				id="facilities"
+			>
 				<q-icon
 					v-for="f in room.facilities"
 					:key="f"
@@ -27,7 +33,7 @@
 			class="row"
 			@click="toPatient"
 			id="patient-row"
-			v-if="patient"
+			v-if="settings.viewPreferences.patient && patient"
 		>
 			<div class="col-auto">
 				<q-avatar rounded id="patient-picture" size="5rem">
@@ -38,7 +44,7 @@
 				<span id="patient-name">
 					{{ patient.name }}
 				</span>
-				<div class="monitoring-data">
+				<div v-if="settings.viewPreferences.monitoringData" class="monitoring-data">
 					<div class="monitoring-data-item">
 						<q-icon name="fas fa-heartbeat" size="sm" />
 						{{ patient.metrics.heartRate }}
@@ -52,7 +58,7 @@
 		</q-card-section>
 
 		<PatientAction
-			v-if="patient && nextAction"
+			v-if="settings.viewPreferences.nextAction && patient && nextAction"
 			:action="nextAction"
 			@updateActionStatus="updateActionStatus"
 			@updateActionDetails="updateActionDetails"
