@@ -11,39 +11,45 @@
 			Back
 		</q-toolbar>
 
-		<div class="row q-ma-md">
-			<div class="col-auto">
-				<q-avatar rounded id="patient-picture" size="8rem">
-					<img
-						src="https://lorempixel.com/200/200/people"
-						alt="Patient picture"
-					/>
-				</q-avatar>
+		<div v-if="downloaded && this.patient">
+			<div class="row q-ma-md">
+				<div class="col-auto">
+					<q-avatar rounded id="patient-picture" size="8rem">
+						<img
+							src="https://lorempixel.com/200/200/people"
+							alt="Patient picture"
+						/>
+					</q-avatar>
+				</div>
+				<div class="col" id="patient-name">
+					{{ patient.name }}
+				</div>
 			</div>
-			<div class="col" id="patient-name">
-				{{ patient.name }}
-			</div>
+
+			<q-tabs v-model="tab" inline-label>
+				<q-tab name="actions" icon="alarm" label="Actions" />
+				<q-tab name="info" icon="info" label="Info" />
+			</q-tabs>
+
+			<PatientInfo
+				v-if="tab === 'info'"
+				:patient="patient"
+				@updatePatientInfo="updatePatientInfo"
+			/>
+
+			<PatientActions
+				v-if="tab === 'actions'"
+				:actions="patient.actions"
+				@updateActionStatus="updateActionStatus"
+				@updateActionDetails="updateActionDetails"
+				@deleteAction="deleteAction"
+				@addAction="addAction"
+			/>
 		</div>
-
-		<q-tabs v-model="tab" inline-label>
-			<q-tab name="actions" icon="alarm" label="Actions" />
-			<q-tab name="info" icon="info" label="Info" />
-		</q-tabs>
-
-		<PatientInfo
-			v-if="tab === 'info'"
-			:patient="patient"
-			@updatePatientInfo="updatePatientInfo"
-		/>
-
-		<PatientActions
-			v-if="tab === 'actions'"
-			:actions="patient.actions"
-			@updateActionStatus="updateActionStatus"
-			@updateActionDetails="updateActionDetails"
-			@deleteAction="deleteAction"
-			@addAction="addAction"
-		/>
+		<div v-else-if="downloaded" id="error-message" class="absolute-center">
+			Patient information not available
+		</div>
+		<Loading v-else />
 	</q-page>
 </template>
 
@@ -51,11 +57,12 @@
 import ClinicService from "../services/ClinicService";
 import PatientInfo from "../components/Patient/PatientInfo";
 import PatientActions from "../components/Patient/Actions/PatientActions";
+import Loading from "../components/Shared/Loading";
 const clinic = new ClinicService();
 
 export default {
 	name: "PagePatient",
-	components: { PatientActions, PatientInfo },
+	components: { Loading, PatientActions, PatientInfo },
 	props: {
 		id: {
 			required: true
@@ -64,7 +71,8 @@ export default {
 	data() {
 		return {
 			tab: "actions",
-			patient: {},
+			downloaded: false,
+			patient: null,
 			departmentName: ""
 		};
 	},
@@ -106,15 +114,24 @@ export default {
 					this.patient.remarks
 				)
 				.then(() => this.getPatient());
+		},
+		async init() {
+			this.getPatient();
 		}
 	},
-	mounted() {
-		this.getPatient();
+	async mounted() {
+		await this.init();
+		this.downloaded = true;
 	}
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+#error-message {
+	width: 100%;
+	text-align: center;
+}
+
 #patient-picture {
 	margin-right: 1rem;
 }

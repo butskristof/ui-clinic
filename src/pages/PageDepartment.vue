@@ -13,6 +13,7 @@
 			<q-btn-toggle
 				flat
 				stretch
+				v-if="downloaded && this.rooms.length > 0"
 				v-model="view"
 				:options="[
 					{ icon: 'map', value: 'map' },
@@ -21,10 +22,18 @@
 			/>
 		</q-toolbar>
 
-		Department name
+		<div v-if="departmentName" class="text-h4 title">
+			{{ departmentName }}
+		</div>
 
-		<DepartmentMap v-if="view === 'map'" :rooms="this.rooms" />
-		<DepartmentList v-if="view === 'list'" :rooms="this.rooms" />
+		<div v-if="downloaded && this.rooms.length > 0">
+			<DepartmentMap v-if="view === 'map'" :rooms="this.rooms" />
+			<DepartmentList v-if="view === 'list'" :rooms="this.rooms" />
+		</div>
+		<div v-else-if="downloaded" class="absolute-center">
+			No rooms available
+		</div>
+		<Loading v-else />
 	</q-page>
 </template>
 
@@ -34,10 +43,11 @@ const clinic = new ClinicService();
 
 import DepartmentMap from "../components/DepartmentMap/DepartmentMap";
 import DepartmentList from "../components/DepartmentList/DepartmentList";
+import Loading from "../components/Shared/Loading";
 
 export default {
 	name: "PageDepartment",
-	components: { DepartmentMap, DepartmentList },
+	components: { Loading, DepartmentMap, DepartmentList },
 	props: {
 		id: {
 			required: true
@@ -45,8 +55,10 @@ export default {
 	},
 	data() {
 		return {
+			downloaded: false,
 			view: "list", // TODO replace with setting
 			rooms: [],
+			departmentName: "",
 			updateInterval: null,
 			playAlarm: false
 		};
@@ -57,20 +69,38 @@ export default {
 				name: "Clinic"
 			});
 		},
+		getDepartmentName() {
+			clinic
+				.getDepartmentName(this.id)
+				.then(name => (this.departmentName = name));
+		},
 		getRooms() {
 			clinic
 				.getRoomsForDepartment(this.id)
 				.then(rooms => (this.rooms = rooms));
+		},
+		async init() {
+			this.getDepartmentName();
+			this.getRooms();
+			this.updateInterval = setInterval(this.getRooms, 10000);
 		}
 	},
-	mounted() {
-		this.getRooms();
-		this.updateInterval = setInterval(this.getRooms, 10000);
+	async mounted() {
+		await this.init();
+		this.downloaded = true;
+	},
+	beforeDestroy() {
+		clearInterval(this.updateInterval);
 	}
 };
 </script>
 
 <style lang="scss">
+.title {
+	margin-top: 1rem;
+	margin-left: 1rem;
+}
+
 .q-btn-group > .q-btn.text-primary {
 	background: rgba(0, 0, 0, 0.25);
 }

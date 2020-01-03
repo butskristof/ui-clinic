@@ -9,7 +9,11 @@
 			/>
 		</q-toolbar>
 
-		<div id="patient-actions" class="q-mb-xl">
+		<div
+			v-if="filteredActions.length > 0"
+			id="patient-actions"
+			class="q-mb-xl"
+		>
 			<PatientAction
 				class="q-ma-md"
 				v-for="action in filteredActions"
@@ -19,6 +23,9 @@
 				@updateActionDetails="updateActionDetails"
 				@deleteAction="deleteAction"
 			/>
+		</div>
+		<div v-else class="empty-state">
+			There are no upcoming actions for this patient.
 		</div>
 
 		<q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -83,6 +90,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.empty-state {
+	width: 100%;
+	text-align: center;
+	margin-top: 2rem;
+}
 #patient-actions {
 	margin-top: -1rem;
 }

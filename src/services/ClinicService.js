@@ -1,4 +1,5 @@
 import axios from "axios";
+import ErrorService from "./ErrorService";
 
 const BASE_URL = "http://localhost:3000";
 const CLINIC_ID = 1;
@@ -11,7 +12,7 @@ export default class ClinicService {
 			);
 			return await result.data;
 		} catch (err) {
-			console.error(err);
+			ErrorService.showAlert("Could not get departments", "red");
 			return [];
 		}
 	}
@@ -22,8 +23,8 @@ export default class ClinicService {
 			const data = await result.data;
 			return data.name;
 		} catch (err) {
-			console.error(err);
-			return [];
+			// ErrorService.showAlert("Could not get department name", "red");
+			return null;
 		}
 	}
 
@@ -35,6 +36,10 @@ export default class ClinicService {
 			return await result.data;
 		} catch (err) {
 			console.error(err);
+			ErrorService.showAlert(
+				"Could not get rooms for this department",
+				"red"
+			);
 			return [];
 		}
 	}
@@ -46,8 +51,7 @@ export default class ClinicService {
 			);
 			return await result.data;
 		} catch (err) {
-			console.error(err);
-			return [];
+			return null;
 		}
 	}
 
@@ -58,7 +62,10 @@ export default class ClinicService {
 				remarks
 			});
 		} catch (err) {
-			console.error(err);
+			ErrorService.showAlert(
+				"Error while updating patient information.",
+				"red"
+			);
 		}
 	}
 
@@ -76,8 +83,7 @@ export default class ClinicService {
 				a => a.done === false || new Date(a.timestamp) > now
 			)[0];
 		} catch (err) {
-			console.error(err);
-			return [];
+			return null;
 		}
 	}
 
@@ -87,7 +93,7 @@ export default class ClinicService {
 				done: value
 			});
 		} catch (err) {
-			console.error(err);
+			ErrorService.showAlert("Could not update action status", "red");
 		}
 	}
 
@@ -98,7 +104,7 @@ export default class ClinicService {
 				description
 			});
 		} catch (err) {
-			console.error(err);
+			ErrorService.showAlert("Could not update action details", "red");
 		}
 	}
 
@@ -107,7 +113,7 @@ export default class ClinicService {
 			// await axios.delete(`${BASE_URL}/actions/${id}`);
 			console.log(`Just pretend we've deleted action with id ${id}`);
 		} catch (err) {
-			console.error(err);
+			ErrorService.showAlert("Could not delete action", "red");
 		}
 	}
 
@@ -115,7 +121,7 @@ export default class ClinicService {
 		try {
 			await axios.post(`${BASE_URL}/actions`, payload);
 		} catch (err) {
-			console.error(err);
+			ErrorService.showAlert("Error while adding action", "red");
 		}
 	}
 }

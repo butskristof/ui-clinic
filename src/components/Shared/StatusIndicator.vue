@@ -71,9 +71,7 @@ export default {
 	},
 	methods: {
 		clickIndicator() {
-			if (this.checkMonitoringData) {
-				this.$emit("stopAlarm");
-			}
+			this.$emit("stopAlarm");
 		}
 	}
 };
