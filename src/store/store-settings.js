@@ -19,7 +19,7 @@ const state = {
 				upper: 120
 			}
 		},
-		enableAlarm: true,
+		enableAlarm: false,
 		alarmTime: 120,
 		defaultView: "list"
 	}
