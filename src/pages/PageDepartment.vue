@@ -76,7 +76,7 @@ export default {
 	data() {
 		return {
 			downloaded: false,
-			view: "map", // TODO replace with setting
+			view: "",
 			rooms: [],
 			departmentName: "",
 			updateInterval: null,
@@ -126,6 +126,7 @@ export default {
 		}
 	},
 	async mounted() {
+		this.view = this.settings.defaultView;
 		await this.init();
 		this.downloaded = true;
 	},

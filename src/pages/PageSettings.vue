@@ -43,6 +43,17 @@
 					<q-toggle color="blue" v-model="nextAction" />
 				</q-item-section>
 			</q-item>
+			<q-item tag="label">
+				<q-item-section>
+					<q-item-label>Default department view</q-item-label>
+				</q-item-section>
+				<q-item-section side>
+					<div class="radio-row">
+						<q-radio v-model="defaultView" val="map" label="Map" />
+						<q-radio v-model="defaultView" val="list" label="List" />
+					</div>
+				</q-item-section>
+			</q-item>
 		</q-list>
 
 		<q-list bordered padding class="q-mb-md">
@@ -279,6 +290,14 @@ export default {
 			set(value) {
 				this.setAlarmTime(value);
 			}
+		},
+		defaultView: {
+			get() {
+				return this.settings.defaultView;
+			},
+			set(value) {
+				this.setDefaultView(value);
+			}
 		}
 	},
 	data() {
@@ -289,10 +308,17 @@ export default {
 			"setViewPreference",
 			"setAlarm",
 			"setAlarmTime",
-			"setTreshold"
+			"setTreshold",
+			"setDefaultView"
 		]),
 		visitOurWebsite() {},
 		emailUs() {}
 	}
 };
 </script>
+
+<style scoped lang="scss">
+.radio-row {
+	flex-direction: row !important;
+}
+</style>

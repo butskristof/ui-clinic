@@ -20,7 +20,8 @@ const state = {
 			}
 		},
 		enableAlarm: true,
-		alarmTime: 120
+		alarmTime: 120,
+		defaultView: "list"
 	}
 };
 
@@ -36,6 +37,9 @@ const mutations = {
 	},
 	setAlarmTime(state, value) {
 		state.settings.alarmTime = value;
+	},
+	setDefaultView(state, value) {
+		state.settings.defaultView = value;
 	},
 	setSettings(state, settings) {
 		Object.assign(state.settings, settings);
@@ -57,6 +61,10 @@ const actions = {
 	},
 	setAlarmTime({ commit, dispatch }, value) {
 		commit("setAlarmTime", value);
+		dispatch("saveSettings");
+	},
+	setDefaultView({ commit, dispatch }, value) {
+		commit("setDefaultView", value);
 		dispatch("saveSettings");
 	},
 	saveSettings({ state }) {
