@@ -1,6 +1,11 @@
 <template>
 	<q-card class="room-box">
-		<RoomHeader :room="room" :nextAction="nextAction" />
+		<RoomHeader
+			:room="room"
+			:nextAction="nextAction"
+			@startAlarm="$emit('startAlarm')"
+			@stopAlarm="$emit('stopAlarm')"
+		/>
 
 		<RoomPatientInfo :patient="patient" />
 

@@ -27,8 +27,19 @@
 		</div>
 
 		<div v-if="downloaded && this.rooms.length > 0">
-			<DepartmentMap v-if="view === 'map'" :rooms="this.rooms" />
-			<DepartmentList v-if="view === 'list'" :rooms="this.rooms" />
+			<DepartmentMap
+				v-if="view === 'map'"
+				:rooms="this.rooms"
+				@startAlarm="startAlarm"
+				@stopAlarm="stopAlarm"
+			/>
+			<DepartmentList
+				v-if="view === 'list'"
+				:rooms="this.rooms"
+				@startAlarm="startAlarm"
+				@stopAlarm="stopAlarm"
+			/>
+			<audio id="alarm-audio" src="statics/alarm.mp3" preload="auto" />
 		</div>
 
 		<NoContent v-else-if="downloaded" @tryAgain="init">
@@ -82,6 +93,12 @@ export default {
 				.getRoomsForDepartment(this.id)
 				.then(rooms => (this.rooms = rooms));
 		},
+		startAlarm() {
+			document.querySelector("#alarm-audio").play();
+		},
+		stopAlarm() {
+			document.querySelector("#alarm-audio").pause();
+		},
 		async init() {
 			clearInterval(this.updateInterval);
 			this.getDepartmentName();
@@ -107,5 +124,10 @@ export default {
 
 .q-btn-group > .q-btn.text-primary {
 	background: rgba(0, 0, 0, 0.25);
+}
+
+audio {
+	position: absolute;
+	visibility: hidden;
 }
 </style>

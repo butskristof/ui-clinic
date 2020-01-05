@@ -12,6 +12,8 @@
 				:key="room.id"
 				:room="room"
 				:mapDimensions="imgSize"
+				@startAlarm="$emit('startAlarm')"
+				@stopAlarm="$emit('stopAlarm')"
 			/>
 		</div>
 	</q-page>

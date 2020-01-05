@@ -4,10 +4,9 @@
 			v-for="room in this.rooms"
 			:key="room.id"
 			:room="room"
-			@startAlarm="startAlarm"
-			@stopAlarm="stopAlarm"
+			@startAlarm="$emit('startAlarm')"
+			@stopAlarm="$emit('stopAlarm')"
 		/>
-		<audio id="alarm-audio" src="statics/alarm.mp3" preload="auto" />
 	</q-page>
 </template>
 
@@ -27,14 +26,6 @@ export default {
 		return {
 			playAlarm: false
 		};
-	},
-	methods: {
-		startAlarm() {
-			document.querySelector("#alarm-audio").play();
-		},
-		stopAlarm() {
-			document.querySelector("#alarm-audio").pause();
-		}
 	}
 };
 </script>
@@ -47,9 +38,5 @@ export default {
 	justify-content: center;
 	align-items: stretch;
 	align-content: flex-start;
-}
-audio {
-	position: absolute;
-	visibility: hidden;
 }
 </style>
