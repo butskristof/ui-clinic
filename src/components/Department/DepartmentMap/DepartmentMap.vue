@@ -1,6 +1,6 @@
 <template>
 	<q-page>
-		<q-img
+		<img
 			src="statics/floorplan.png"
 			alt="UI Clinic floorplan"
 			id="floorplan"
@@ -41,8 +41,8 @@ export default {
 	methods: {
 		setImgSize() {
 			const img = this.$refs.mapImg;
-			const w = img.$el.clientWidth;
-			const h = w / (img.image.width / img.image.height);
+			const w = img.clientWidth;
+			const h = w / (img.width / img.height);
 			this.imgSize = {
 				width: w,
 				height: h

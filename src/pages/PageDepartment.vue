@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ClinicService from "../services/ClinicService";
 const clinic = new ClinicService();
 
@@ -66,6 +67,9 @@ export default {
 		id: {
 			required: true
 		}
+	},
+	computed: {
+		...mapGetters("settings", ["settings"])
 	},
 	data() {
 		return {
@@ -94,7 +98,9 @@ export default {
 				.then(rooms => (this.rooms = rooms));
 		},
 		startAlarm() {
-			document.querySelector("#alarm-audio").play();
+			if (this.settings.enableAlarm) {
+				document.querySelector("#alarm-audio").play();
+			}
 		},
 		stopAlarm() {
 			document.querySelector("#alarm-audio").pause();

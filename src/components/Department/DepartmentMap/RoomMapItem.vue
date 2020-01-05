@@ -69,5 +69,6 @@ export default {
 <style scoped>
 #room-box {
 	position: absolute;
+	border: 1px solid rgba(0, 0, 0, 0.25);
 }
 </style>

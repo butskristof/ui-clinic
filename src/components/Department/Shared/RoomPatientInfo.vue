@@ -16,13 +16,13 @@
 			</span>
 			<div
 				v-if="settings.viewPreferences.monitoringData"
-				class="monitoring-data"
+				class="monitoring-data row"
 			>
-				<div class="monitoring-data-item">
+				<div class="monitoring-data-item col-auto">
 					<q-icon name="fas fa-heartbeat" size="sm" />
 					{{ patient.metrics.heartRate }}
 				</div>
-				<div class="monitoring-data-item">
+				<div class="monitoring-data-item col-auto">
 					<q-icon name="fas fa-stopwatch" size="sm" />
 					{{ patient.metrics.bloodPressure.upper }} /
 					{{ patient.metrics.bloodPressure.lower }}
@@ -80,11 +80,7 @@ export default {
 
 .monitoring-data-item {
 	display: inline-block;
-	margin: auto 0.5rem;
-
-	&:first-of-type {
-		margin-left: 0;
-	}
+	margin-right: 1rem;
 
 	font-size: 1.1rem;
 

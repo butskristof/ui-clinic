@@ -65,9 +65,10 @@ export default {
 
 <style scoped lang="scss">
 .status-indicator {
-	align-self: center;
+	align-self: baseline;
 	width: 1.75rem;
 	height: 1.75rem;
+	margin-top: 0.35rem;
 	margin-right: 0.75rem;
 }
 
