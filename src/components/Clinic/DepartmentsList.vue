@@ -1,5 +1,5 @@
 <template>
-	<q-list bordered separator class="q-mt-md">
+	<q-list bordered separator class="q-ma-md">
 		<q-item
 			clickable
 			v-ripple

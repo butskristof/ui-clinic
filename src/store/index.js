@@ -3,8 +3,6 @@ import Vuex from "vuex";
 
 import settings from "./store-settings";
 
-// import example from './module-example'
-
 Vue.use(Vuex);
 
 /*
@@ -19,7 +17,6 @@ Vue.use(Vuex);
 export default function(/* { ssrContext } */) {
 	const Store = new Vuex.Store({
 		modules: {
-			// example
 			settings
 		},
 

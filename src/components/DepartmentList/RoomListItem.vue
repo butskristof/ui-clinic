@@ -1,4 +1,4 @@
-<template xmlns:div="http://www.w3.org/1999/html">
+<template>
 	<q-card class="room-box">
 		<q-card-section class="row">
 			<div class="col-auto flex">
@@ -44,7 +44,10 @@
 				<span id="patient-name">
 					{{ patient.name }}
 				</span>
-				<div v-if="settings.viewPreferences.monitoringData" class="monitoring-data">
+				<div
+					v-if="settings.viewPreferences.monitoringData"
+					class="monitoring-data"
+				>
 					<div class="monitoring-data-item">
 						<q-icon name="fas fa-heartbeat" size="sm" />
 						{{ patient.metrics.heartRate }}
