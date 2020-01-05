@@ -1,14 +1,17 @@
 <script>
-import { Line } from "vue-chartjs";
+import { Line, mixins } from "vue-chartjs";
+const { reactiveData } = mixins;
 
 import MedicalDataService from "../../../services/MedicalDataService";
 const service = new MedicalDataService();
 
 export default {
 	extends: Line,
+	mixins: [reactiveData],
 	data() {
 		return {
-			healthData: {}
+			healthData: {},
+			updateInterval: null
 		};
 	},
 	methods: {
@@ -17,9 +20,24 @@ export default {
 				this.healthData = data;
 			});
 		},
+		updateData() {
+			service.getPatientMedicalData().then(data => {
+				if (
+					this.chartData.labels[this.chartData.labels.length - 1] !==
+					data.label
+				) {
+					const newData = { ...this.chartData };
+					newData.labels.push(data.label);
+					newData.datasets[0].data.push(data.heartRate);
+					newData.datasets[1].data.push(data.bloodPressure.upper);
+					newData.datasets[2].data.push(data.bloodPressure.lower);
+					this.chartData = newData;
+				}
+			});
+		},
 		async init() {
 			await this.getData();
-			const dataObject = {
+			this.chartData = {
 				labels: this.healthData.labels,
 				datasets: [
 					{
@@ -59,11 +77,19 @@ export default {
 				}
 			};
 
-			this.renderChart(dataObject, optionsObject);
+			this.renderChart(this.chartData, optionsObject);
+
+			if (this.updateInterval == null) {
+				this.updateInterval = setInterval(this.updateData, 10000);
+			}
 		}
 	},
 	mounted() {
 		this.init();
+	},
+	beforeDestroy() {
+		clearInterval(this.updateInterval);
+		this.updateInterval = null;
 	}
 };
 </script>

@@ -50,7 +50,11 @@
 				<q-item-section side>
 					<div class="radio-row">
 						<q-radio v-model="defaultView" val="map" label="Map" />
-						<q-radio v-model="defaultView" val="list" label="List" />
+						<q-radio
+							v-model="defaultView"
+							val="list"
+							label="List"
+						/>
 					</div>
 				</q-item-section>
 			</q-item>

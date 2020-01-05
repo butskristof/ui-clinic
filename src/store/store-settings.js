@@ -15,8 +15,8 @@ const state = {
 				upper: 100
 			},
 			bloodPressure: {
-				lower: 80,
-				upper: 120
+				lower: 90,
+				upper: 140
 			}
 		},
 		enableAlarm: false,
