@@ -99,6 +99,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+#patient-action {
+	max-width: 25rem;
+	width: 100%;
+}
+
 .action-status-icon {
 	font-size: 2rem;
 }

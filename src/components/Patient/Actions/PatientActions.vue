@@ -95,7 +95,15 @@ export default {
 	text-align: center;
 	margin-top: 2rem;
 }
+
 #patient-actions {
 	margin-top: -1rem;
+
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: flex-start;
 }
 </style>
