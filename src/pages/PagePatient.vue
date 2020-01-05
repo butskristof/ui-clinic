@@ -1,5 +1,5 @@
 <template>
-	<q-page>
+	<q-page class="page-wrapper">
 		<q-toolbar class="bg-grey-3">
 			<q-icon
 				color="primary"
@@ -11,7 +11,7 @@
 			Back
 		</q-toolbar>
 
-		<div v-if="downloaded && this.patient">
+		<div v-if="downloaded && this.patient" id="patient-container">
 			<div class="row q-ma-md">
 				<div class="col-auto">
 					<q-avatar rounded id="patient-picture" size="8rem">
@@ -36,6 +36,7 @@
 			<q-tabs v-model="tab" inline-label>
 				<q-tab name="actions" icon="alarm" label="Actions" />
 				<q-tab name="info" icon="info" label="Info" />
+				<q-tab name="scans" icon="accessibility" label="Scans" />
 			</q-tabs>
 
 			<PatientInfo
@@ -52,6 +53,8 @@
 				@deleteAction="deleteAction"
 				@addAction="addAction"
 			/>
+
+			<PatientScans v-if="tab === 'scans'" :scans="patient.scans" />
 		</div>
 		<NoContent v-else-if="downloaded" @tryAgain="init">
 			Patient information not available
@@ -70,10 +73,17 @@ import ClinicService from "../services/ClinicService";
 const clinic = new ClinicService();
 
 import getProfilePicture from "../functions/profilepictures";
+import PatientScans from "../components/Patient/PatientScans";
 
 export default {
 	name: "PagePatient",
-	components: { NoContent, Loading, PatientActions, PatientInfo },
+	components: {
+		PatientScans,
+		NoContent,
+		Loading,
+		PatientActions,
+		PatientInfo
+	},
 	props: {
 		id: {
 			required: true
@@ -141,6 +151,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.page-wrapper {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-content: stretch;
+	align-items: stretch;
+}
+
+#patient-container {
+	flex: 1 1 auto;
+	align-self: auto;
+
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-content: stretch;
+	align-items: stretch;
+}
+
 #patient-picture {
 	margin-right: 1rem;
 }
