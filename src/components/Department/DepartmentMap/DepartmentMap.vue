@@ -21,6 +21,8 @@
 
 <script>
 import RoomMapItem from "./RoomMapItem";
+import * as imgSize from "probe-image-size";
+
 export default {
 	name: "DepartmentMap",
 	components: { RoomMapItem },
@@ -41,14 +43,17 @@ export default {
 	methods: {
 		setImgSize() {
 			const img = this.$refs.mapImg;
-			const w = img.clientWidth;
-			const h = w / (img.width / img.height);
-			this.imgSize = {
-				width: w,
-				height: h
-			};
-			this.$set(this.imgSize, "width", w);
-			this.$set(this.imgSize, "height", h);
+			const url = img.src;
+			imgSize(url).then(res => {
+				const w = img.clientWidth;
+				const h = w / (res.width / res.height);
+				this.imgSize = {
+					width: w,
+					height: h
+				};
+				this.$set(this.imgSize, "width", w);
+				this.$set(this.imgSize, "height", h);
+			});
 		}
 	},
 	mounted() {
