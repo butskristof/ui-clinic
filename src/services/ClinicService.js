@@ -12,7 +12,7 @@ export default class ClinicService {
 			);
 			return await result.data;
 		} catch (err) {
-			ErrorService.showAlert("Could not get departments", "red");
+			// ErrorService.showAlert("Could not get departments", "red");
 			return [];
 		}
 	}
@@ -36,10 +36,10 @@ export default class ClinicService {
 			return await result.data;
 		} catch (err) {
 			console.error(err);
-			ErrorService.showAlert(
-				"Could not get rooms for this department",
-				"red"
-			);
+			// ErrorService.showAlert(
+			// 	"Could not get rooms for this department",
+			// 	"red"
+			// );
 			return [];
 		}
 	}

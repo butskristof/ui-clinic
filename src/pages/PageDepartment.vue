@@ -30,9 +30,11 @@
 			<DepartmentMap v-if="view === 'map'" :rooms="this.rooms" />
 			<DepartmentList v-if="view === 'list'" :rooms="this.rooms" />
 		</div>
-		<div v-else-if="downloaded" class="absolute-center">
+
+		<NoContent v-else-if="downloaded" @tryAgain="init">
 			No rooms available
-		</div>
+		</NoContent>
+
 		<Loading v-else />
 	</q-page>
 </template>
@@ -44,10 +46,11 @@ const clinic = new ClinicService();
 import DepartmentMap from "../components/DepartmentMap/DepartmentMap";
 import DepartmentList from "../components/DepartmentList/DepartmentList";
 import Loading from "../components/Shared/Loading";
+import NoContent from "../components/Shared/NoContent";
 
 export default {
 	name: "PageDepartment",
-	components: { Loading, DepartmentMap, DepartmentList },
+	components: { NoContent, Loading, DepartmentMap, DepartmentList },
 	props: {
 		id: {
 			required: true
@@ -80,6 +83,7 @@ export default {
 				.then(rooms => (this.rooms = rooms));
 		},
 		async init() {
+			clearInterval(this.updateInterval);
 			this.getDepartmentName();
 			this.getRooms();
 			this.updateInterval = setInterval(this.getRooms, 10000);

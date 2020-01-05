@@ -15,14 +15,21 @@
 			<div class="row q-ma-md">
 				<div class="col-auto">
 					<q-avatar rounded id="patient-picture" size="8rem">
-						<img
-							src="https://lorempixel.com/200/200/people"
-							alt="Patient picture"
-						/>
+						<img :src="profilePicture()" alt="Patient picture" />
 					</q-avatar>
 				</div>
-				<div class="col" id="patient-name">
-					{{ patient.name }}
+				<div class="col" id="patient-info">
+					<span id="patient-name">
+						{{ patient.name }}
+					</span>
+					<div class="dept-data">
+						<div class="dept-data-item">
+							{{ patient.room.departmentName }}
+						</div>
+						<div class="dept-data-item">
+							Room {{ patient.room.number }}
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -46,23 +53,27 @@
 				@addAction="addAction"
 			/>
 		</div>
-		<div v-else-if="downloaded" id="error-message" class="absolute-center">
+		<NoContent v-else-if="downloaded" @tryAgain="init">
 			Patient information not available
-		</div>
+		</NoContent>
 		<Loading v-else />
 	</q-page>
 </template>
 
 <script>
-import ClinicService from "../services/ClinicService";
 import PatientInfo from "../components/Patient/PatientInfo";
 import PatientActions from "../components/Patient/Actions/PatientActions";
 import Loading from "../components/Shared/Loading";
+import NoContent from "../components/Shared/NoContent";
+
+import ClinicService from "../services/ClinicService";
 const clinic = new ClinicService();
+
+import getProfilePicture from "../functions/profilepictures";
 
 export default {
 	name: "PagePatient",
-	components: { Loading, PatientActions, PatientInfo },
+	components: { NoContent, Loading, PatientActions, PatientInfo },
 	props: {
 		id: {
 			required: true
@@ -90,6 +101,9 @@ export default {
 				this.$set(this.patient.room, "departmentName", name);
 				// $set trigger a Vue update, just assigning with this.patient.room.departmentName does not
 			});
+		},
+		profilePicture() {
+			return getProfilePicture(this.patient.picture);
 		},
 		updateActionStatus(id, value) {
 			clinic.setActionStatus(id, value).then(() => this.getPatient());
@@ -127,21 +141,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#error-message {
-	width: 100%;
-	text-align: center;
-}
-
 #patient-picture {
 	margin-right: 1rem;
 }
 
-#patient-name {
+#patient-info {
 	align-self: center;
-	font-size: 2rem;
 }
 
-dd {
-	margin-bottom: 1rem;
+#patient-name {
+	font-size: 1.75rem;
+	line-height: 2rem;
+}
+
+.dept-data-item {
+	display: block;
+	font-size: 0.9rem;
 }
 </style>

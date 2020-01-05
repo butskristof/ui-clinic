@@ -1,8 +1,8 @@
 <template>
 	<div id="error-message" class="absolute-center">
-		<span class="text-h6">
+		<div class="text-h6">
 			<slot />
-		</span>
+		</div>
 
 		<q-btn
 			color="primary"

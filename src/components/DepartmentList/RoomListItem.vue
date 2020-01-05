@@ -74,8 +74,11 @@
 import { mapGetters } from "vuex";
 import StatusIndicator from "../Shared/StatusIndicator";
 import PatientAction from "../Shared/PatientAction";
+
 import ClinicService from "../../services/ClinicService";
 const clinic = new ClinicService();
+
+import getProfilePicture from "../../functions/profilepictures";
 
 export default {
 	name: "RoomListItem",
@@ -92,7 +95,7 @@ export default {
 	computed: {
 		...mapGetters("settings", ["settings"]),
 		imgLink() {
-			return `https://lorempixel.com/200/200/people?q=${Math.random()}`;
+			return getProfilePicture(this.patient.picture);
 		},
 		patient() {
 			return this.room.patients[0];
