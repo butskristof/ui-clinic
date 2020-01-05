@@ -8,6 +8,7 @@ const service = new MedicalDataService();
 export default {
 	extends: Line,
 	mixins: [reactiveData],
+	props: ["options"],
 	data() {
 		return {
 			healthData: {},
@@ -63,21 +64,8 @@ export default {
 					}
 				]
 			};
-			const optionsObject = {
-				responsive: true,
-				maintainAspectRatio: false,
-				scales: {
-					yAxes: [
-						{
-							ticks: {
-								beginAtZero: true
-							}
-						}
-					]
-				}
-			};
 
-			this.renderChart(this.chartData, optionsObject);
+			this.renderChart(this.chartData, this.options);
 
 			if (this.updateInterval == null) {
 				this.updateInterval = setInterval(this.updateData, 10000);
