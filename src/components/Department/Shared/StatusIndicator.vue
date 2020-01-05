@@ -34,14 +34,20 @@ export default {
 				return true;
 			}
 
-			// TODO add calculation
-			const bloodPressure = this.patient.metrics.bloodPressure;
+			const bloodPressureLower = this.patient.metrics.bloodPressure.lower;
 			if (
-				bloodPressure < this.settings.tresholds.bloodPressure.lower ||
-				bloodPressure > this.settings.tresholds.bloodPressure.upper
+				bloodPressureLower > this.settings.tresholds.bloodPressure.lower
 			) {
 				return true;
 			}
+
+			const bloodPressureUpper = this.patient.metrics.bloodPressure.upper;
+			if (
+				bloodPressureUpper > this.settings.tresholds.bloodPressure.upper
+			) {
+				return true;
+			}
+
 			return false;
 		},
 		statusClass() {

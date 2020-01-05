@@ -15,8 +15,8 @@ const state = {
 				upper: 100
 			},
 			bloodPressure: {
-				lower: 50,
-				upper: 100
+				lower: 80,
+				upper: 120
 			}
 		},
 		enableAlarm: true,
@@ -28,14 +28,14 @@ const mutations = {
 	setViewPreference(state, payload) {
 		state.settings.viewPreferences[payload.key] = payload.value;
 	},
-	setLowerTreshold(state, payload) {
-		state.settings.tresholds[payload.key].lower = payload.value;
-	},
-	setUpperTreshold(state, payload) {
-		state.settings.tresholds[payload].upper = payload.value;
+	setTreshold(state, payload) {
+		state.settings.tresholds[payload.key][payload.type] = payload.value;
 	},
 	setAlarm(state, value) {
-		state.enableAlarm = value;
+		state.settings.enableAlarm = value;
+	},
+	setAlarmTime(state, value) {
+		state.settings.alarmTime = value;
 	},
 	setSettings(state, settings) {
 		Object.assign(state.settings, settings);
@@ -47,16 +47,16 @@ const actions = {
 		commit("setViewPreference", payload);
 		dispatch("saveSettings");
 	},
-	setLowerTreshold({ commit, dispatch }, payload) {
-		commit("setLowerTreshold", payload);
-		dispatch("saveSettings");
-	},
-	setUpperTreshold({ commit, dispatch }, payload) {
-		commit("setUpperTreshold", payload);
+	setTreshold({ commit, dispatch }, payload) {
+		commit("setTreshold", payload);
 		dispatch("saveSettings");
 	},
 	setAlarm({ commit, dispatch }, value) {
 		commit("setAlarm", value);
+		dispatch("saveSettings");
+	},
+	setAlarmTime({ commit, dispatch }, value) {
+		commit("setAlarmTime", value);
 		dispatch("saveSettings");
 	},
 	saveSettings({ state }) {

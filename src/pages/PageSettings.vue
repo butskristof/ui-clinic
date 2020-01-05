@@ -45,6 +45,79 @@
 			</q-item>
 		</q-list>
 
+		<q-list bordered padding class="q-mb-md">
+			<q-item-label header>Treshold preferences</q-item-label>
+
+			<q-item tag="label" class="row">
+				<q-item-section class="col-2">
+					<q-item-label>Heart rate</q-item-label>
+				</q-item-section>
+				<q-item-section class="col">
+					<q-range
+						v-model="heartRateRange"
+						:min="0"
+						:max="200"
+						label-always
+					/>
+				</q-item-section>
+			</q-item>
+
+			<q-item tag="label" class="row">
+				<q-item-section class="col-2">
+					<q-item-label>Blood pressure systolic</q-item-label>
+				</q-item-section>
+				<q-item-section class="col">
+					<q-slider
+						v-model="bloodPressureUpper"
+						:min="100"
+						:max="180"
+						label-always
+					/>
+				</q-item-section>
+			</q-item>
+
+			<q-item tag="label" class="row">
+				<q-item-section class="col-2">
+					<q-item-label>Blood pressure diastolic</q-item-label>
+				</q-item-section>
+				<q-item-section class="col">
+					<q-slider
+						v-model="bloodPressureLower"
+						:min="60"
+						:max="120"
+						label-always
+					/>
+				</q-item-section>
+			</q-item>
+		</q-list>
+
+		<q-list bordered padding class="q-mb-md">
+			<q-item-label header>Alarm preferences</q-item-label>
+
+			<q-item tag="label">
+				<q-item-section>
+					<q-item-label>Enable alarm sound</q-item-label>
+				</q-item-section>
+				<q-item-section side>
+					<q-toggle color="blue" v-model="alarmSound" />
+				</q-item-section>
+			</q-item>
+
+			<q-item tag="label" class="row">
+				<q-item-section class="col-2">
+					<q-item-label>Time before alarm</q-item-label>
+				</q-item-section>
+				<q-item-section class="col">
+					<q-slider
+						v-model="alarmTime"
+						:min="0"
+						:max="200"
+						label-always
+					/>
+				</q-item-section>
+			</q-item>
+		</q-list>
+
 		<q-list bordered padding>
 			<q-item-label header>More</q-item-label>
 
@@ -130,13 +203,94 @@ export default {
 					value
 				});
 			}
+		},
+		alarmSound: {
+			get() {
+				return this.settings.enableAlarm;
+			},
+			set(value) {
+				this.setAlarm(value);
+			}
+		},
+		heartRateUpper: {
+			get() {
+				return this.settings.tresholds.heartRate.upper;
+			},
+			set(value) {
+				this.setTreshold({
+					key: "heartRate",
+					type: "upper",
+					value
+				});
+			}
+		},
+		heartRateLower: {
+			get() {
+				return this.settings.tresholds.heartRate.lower;
+			},
+			set(value) {
+				this.setTreshold({
+					key: "heartRate",
+					type: "lower",
+					value
+				});
+			}
+		},
+		heartRateRange: {
+			get() {
+				return {
+					min: this.heartRateLower,
+					max: this.heartRateUpper
+				};
+			},
+			set(value) {
+				this.heartRateUpper = value.max;
+				this.heartRateLower = value.min;
+			}
+		},
+		bloodPressureUpper: {
+			get() {
+				return this.settings.tresholds.bloodPressure.upper;
+			},
+			set(value) {
+				this.setTreshold({
+					key: "bloodPressure",
+					type: "upper",
+					value
+				});
+			}
+		},
+		bloodPressureLower: {
+			get() {
+				return this.settings.tresholds.bloodPressure.lower;
+			},
+			set(value) {
+				this.setTreshold({
+					key: "bloodPressure",
+					type: "lower",
+					value
+				});
+			}
+		},
+		alarmTime: {
+			get() {
+				return this.settings.alarmTime;
+			},
+			set(value) {
+				this.setAlarmTime(value);
+			}
 		}
 	},
 	data() {
 		return {};
 	},
 	methods: {
-		...mapActions("settings", ["setViewPreference"]),
+		...mapActions("settings", [
+			"setViewPreference",
+			"setAlarm",
+			"setAlarmTime",
+			"setTreshold"
+		]),
 		visitOurWebsite() {},
 		emailUs() {}
 	}

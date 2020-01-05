@@ -31,7 +31,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import StatusIndicator from "../../Shared/StatusIndicator";
+import StatusIndicator from "./StatusIndicator";
 export default {
 	name: "RoomHeader",
 	components: { StatusIndicator },

@@ -24,7 +24,8 @@
 				</div>
 				<div class="monitoring-data-item">
 					<q-icon name="fas fa-stopwatch" size="sm" />
-					{{ patient.metrics.bloodPressure }}
+					{{ patient.metrics.bloodPressure.upper }} /
+					{{ patient.metrics.bloodPressure.lower }}
 				</div>
 			</div>
 		</div>
