@@ -37,6 +37,7 @@
 				<q-tab name="actions" icon="alarm" label="Actions" />
 				<q-tab name="info" icon="info" label="Info" />
 				<q-tab name="scans" icon="accessibility" label="Scans" />
+				<q-tab name="metrics" icon="bar_chart" label="Metrics" />
 			</q-tabs>
 
 			<PatientInfo
@@ -55,6 +56,10 @@
 			/>
 
 			<PatientScans v-if="tab === 'scans'" :scans="patient.scans" />
+			<PatientMetrics
+				v-if="tab === 'metrics'"
+				:metrics="patient.metricHistory"
+			/>
 		</div>
 		<NoContent v-else-if="downloaded" @tryAgain="init">
 			Patient information not available
@@ -74,10 +79,12 @@ const clinic = new ClinicService();
 
 import getProfilePicture from "../functions/profilepictures";
 import PatientScans from "../components/Patient/PatientScans";
+import PatientMetrics from "../components/Patient/Metrics/PatientMetrics";
 
 export default {
 	name: "PagePatient",
 	components: {
+		PatientMetrics,
 		PatientScans,
 		NoContent,
 		Loading,
