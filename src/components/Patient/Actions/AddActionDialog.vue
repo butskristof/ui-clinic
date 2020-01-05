@@ -90,6 +90,7 @@ export default {
 		return {
 			newAction: {
 				type: "",
+				done: false,
 				timestamp: "",
 				description: ""
 			}
