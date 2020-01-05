@@ -43,8 +43,8 @@
 import ClinicService from "../services/ClinicService";
 const clinic = new ClinicService();
 
-import DepartmentMap from "../components/DepartmentMap/DepartmentMap";
-import DepartmentList from "../components/DepartmentList/DepartmentList";
+import DepartmentMap from "../components/Department/DepartmentMap/DepartmentMap";
+import DepartmentList from "../components/Department/DepartmentList/DepartmentList";
 import Loading from "../components/Shared/Loading";
 import NoContent from "../components/Shared/NoContent";
 
@@ -59,7 +59,7 @@ export default {
 	data() {
 		return {
 			downloaded: false,
-			view: "list", // TODO replace with setting
+			view: "map", // TODO replace with setting
 			rooms: [],
 			departmentName: "",
 			updateInterval: null,
