@@ -24,7 +24,7 @@ export default {
 			return this.room.patients[0];
 		},
 		checkMonitoringData() {
-			if (!this.patient) return false;
+			if (!this.patient || !this.patient.metrics) return false;
 
 			const heartRate = this.patient.metrics.heartRate;
 			if (

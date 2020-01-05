@@ -54,6 +54,8 @@
 import { mapGetters } from "vuex";
 import ClinicService from "../services/ClinicService";
 const clinic = new ClinicService();
+import MedicalDataService from "../services/MedicalDataService";
+const medicalData = new MedicalDataService();
 
 import DepartmentMap from "../components/Department/DepartmentMap/DepartmentMap";
 import DepartmentList from "../components/Department/DepartmentList/DepartmentList";
@@ -88,14 +90,25 @@ export default {
 			});
 		},
 		getDepartmentName() {
-			clinic
+			return clinic
 				.getDepartmentName(this.id)
 				.then(name => (this.departmentName = name));
 		},
 		getRooms() {
-			clinic
+			return clinic
 				.getRoomsForDepartment(this.id)
-				.then(rooms => (this.rooms = rooms));
+				.then(rooms => (this.rooms = rooms))
+				.then(() => {
+					this.rooms.forEach(r => {
+						if (r.patients[0] && !r.patients[0].metrics) {
+							medicalData
+								.getPatientMedicalData()
+								.then(data =>
+									this.$set(r.patients[0], "metrics", data)
+								);
+						}
+					});
+				});
 		},
 		startAlarm() {
 			if (this.settings.enableAlarm) {

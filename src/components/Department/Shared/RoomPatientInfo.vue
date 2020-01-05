@@ -15,7 +15,7 @@
 				{{ patient.name }}
 			</span>
 			<div
-				v-if="settings.viewPreferences.monitoringData"
+				v-if="settings.viewPreferences.monitoringData && patient.metrics"
 				class="monitoring-data row"
 			>
 				<div class="monitoring-data-item col-auto">
