@@ -6,6 +6,7 @@
 				v-model="showCompleted"
 				label="Show completed"
 				left-label
+				color="secondary"
 			/>
 		</q-toolbar>
 

@@ -21,7 +21,7 @@
 		<q-input v-model="patient.remarks" label="Remarks" type="textarea" />
 
 		<q-btn
-			color="primary"
+			color="secondary"
 			label="Save changes"
 			class="q-mt-md"
 			type="submit"

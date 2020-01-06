@@ -1,5 +1,5 @@
 <template>
-	<q-page>
+	<q-page id="page-wrapper">
 		<img
 			src="statics/floorplan.png"
 			alt="UI Clinic floorplan"
@@ -70,6 +70,10 @@ export default {
 </script>
 
 <style scoped>
+#page-wrapper {
+	overflow: auto;
+}
+
 #floorplan {
 	position: absolute;
 	width: 100%;

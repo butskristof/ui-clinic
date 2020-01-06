@@ -21,11 +21,11 @@
 				class="monitoring-data row"
 			>
 				<div class="monitoring-data-item col-auto">
-					<q-icon name="fas fa-heartbeat" size="sm" />
+					<q-icon name="fas fa-heartbeat" size="sm" color="primary" />
 					{{ patient.metrics.heartRate }}
 				</div>
 				<div class="monitoring-data-item col-auto">
-					<q-icon name="fas fa-stopwatch" size="sm" />
+					<q-icon name="fas fa-stopwatch" size="sm" color="primary" />
 					{{ patient.metrics.bloodPressure.upper }} /
 					{{ patient.metrics.bloodPressure.lower }}
 				</div>
